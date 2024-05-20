@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .container {
-  @apply max-w-7xl mx-auto w-full px-4;
+  @apply max-w-[1440px] mx-auto w-full px-4;
 }
 
 /* Input */
@@ -11,20 +11,8 @@ select {
   @apply w-full px-4 py-2 rounded-md border border-black/20 bg-transparent;
 }
 
-input[type="date"] {
-  @apply w-full px-4 py-2 rounded-md border border-black/20 bg-transparent;
-}
-
 .search-btn {
-  @apply bg-gray-700 px-8 py-3 rounded-md block mx-auto text-white font-bold -translate-y-1/2 shadow-lg hover:shadow-gray-800/50 active:scale-95 transition-all;
-}
-
-.btn-primary {
-  @apply bg-gray-700 px-8 py-2 rounded-md block text-white font-bold shadow-lg hover:shadow-gray-600 active:scale-95 transition-all;
-}
-
-.btn-disabled {
-  @apply bg-gray-500 px-8 py-2 rounded-md block text-white font-bold shadow-lg cursor-default;
+  @apply bg-gray-800 px-8 py-3 rounded-md block mx-auto text-white font-bold -translate-y-1/2 shadow-lg hover:shadow-gray-800/50 active:scale-95 transition-all;
 }
 
 #searchParams {
@@ -33,4 +21,19 @@ input[type="date"] {
 
 #searchParams span {
   @apply font-bold;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  animation: marquee 10s linear infinite;
+  width: max-content;
 }

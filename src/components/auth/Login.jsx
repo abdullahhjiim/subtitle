@@ -1,11 +1,15 @@
 "use client";
+import { login } from "@/app/actions";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [error, setError] = useState("");
+  const router = useRouter();
 
   const validate = () => {
     const errors = {};
@@ -22,13 +26,27 @@ const Login = () => {
     return errors;
   };
 
+  async function onHanldeSubmit(data) {
+
+    try {
+      const response = await login(data);
+      console.log(response);
+      if (!!response.error) {
+        setError(response.error);
+      } else {
+        router.push("/dashboard");
+      }
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = validate();
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
-      // Handle successful form submission
-      console.log("Form submitted");
+      onHanldeSubmit({email, password})
     }
   };
 
@@ -40,6 +58,9 @@ const Login = () => {
           style={{ backgroundImage: `url('/login.png')` }}
         ></div>
         <div className="w-full p-8 lg:w-1/2">
+          {error && (
+            <div className="text-xl text-red-500 text-center">{error}</div>
+          )}
           <h2 className="text-2xl font-bold text-gray-700 text-center">
             Login
           </h2>

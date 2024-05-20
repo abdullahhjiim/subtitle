@@ -6,10 +6,11 @@ const SearchCm = () => {
     <div className="w-[400px]">
       <ReactTyped
         strings={[
-          "এখানে খুঁজুন ... বাংলা সাবটাইটল",
-          "এখানে খুঁজুন ... মুভির নাম  ",
-          "এখানে খুঁজুন ... রিলিজ ইয়ার ",
-          "এখানে খুঁজুন ... ক্যাটাগরি ",
+          "Search here ... Bangla Subtitle",
+          "Search here ... Movie Name ",
+          "Search here ... Relase Year ",
+          "Search here ... Category ",
+          "Search here ... Genrors ",
         ]}
         typeSpeed={100}
         backSpeed={80}
@@ -18,7 +19,7 @@ const SearchCm = () => {
       >
         <input
           type="text"
-          placeholder="এখানে খুঁজুন ... "
+          placeholder="Search here ... "
           className="py-2 pl-10 pr-4  block w-full rounded-lg border border-gray-300 focus:outline-none focus:border-gray-500"
         />
       </ReactTyped>

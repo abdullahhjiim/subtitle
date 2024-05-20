@@ -1,12 +1,15 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Signup = () => {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [error, setError] = useState("");
 
   const validate = () => {
     const errors = {};
@@ -31,15 +34,38 @@ const Signup = () => {
     return errors;
   };
 
+  async function onHandleSubmit (data) {
+    try {
+
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      });
+      console.log(res);
+      res.status === 201 &&
+        router.push("/login");
+    } catch (error) {
+      console.log(error);
+      setError(error.message);
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = validate();
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
-      // Handle successful form submission
-      console.log("Form submitted");
+      onHandleSubmit(JSON.stringify({
+        name,
+        email,
+        password,
+      }))
     }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -49,6 +75,7 @@ const Signup = () => {
           style={{ backgroundImage: `url('/signup.png')` }}
         ></div>
         <div className="w-full p-8 lg:w-1/2">
+        <div className="text-xl text-red-500 text-center">{error && error}</div>
           <h2 className="text-2xl font-bold text-gray-700 text-center">
             Sign Up
           </h2>

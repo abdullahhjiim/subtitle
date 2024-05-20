@@ -101,7 +101,7 @@ const Search = ({ fromList, destination, checkin, checkout }) => {
       </div>
 
       <button disabled={!allowSearch} className="search-btn" onClick={doSearch}>
-        🔍️ {fromList ? "Modify Search" : "Search"}
+        🔍️ &nbsp; {fromList ? " Modify Search" : " Search"}
       </button>
     </>
   );

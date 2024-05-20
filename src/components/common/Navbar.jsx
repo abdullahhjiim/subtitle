@@ -1,18 +1,18 @@
-// components/Navbar.js
 
 import Link from "next/link";
-import { IoIosLogIn } from "react-icons/io";
 import SearchCm from "../header/SearchCm";
+import UserMenu from "../header/UserMenu";
 
-const Navbar = () => {
+const Navbar = async () => {
+
   return (
-    <nav className="bg-white shadow-md py-4 px-6 sticky top-0 z-10">
+    <nav className="bg-white shadow-md py-4 px-6 sticky top-0 z-50">
       <div className="container mx-auto grid grid-cols-3 items-center">
         {/* Logo */}
         <div className="flex-shrink-0">
-          <a href="/" className="text-xl font-bold text-gray-800">
+          <Link href="/" className="text-xl font-bold text-gray-800">
             Logo
-          </a>
+          </Link>
         </div>
 
         {/* Search Bar */}
@@ -40,30 +40,25 @@ const Navbar = () => {
 
         {/* Links */}
         <div className="hidden md:flex space-x-6 justify-end items-center">
-          <a
-            href="#"
-            className="text-gray-800 hover:text-gray-700 hover:font-semibold duration-500"
+          <Link
+            href="/blog"
+            className="text-gray-800 hover:text-gray-700 font-semibold hover:font-bold hover:text-pink-500 duration-500"
           >
             Blog
-          </a>
-          <a
-            href="#"
-            className="text-gray-800 hover:text-gray-700 hover:font-semibold duration-500"
+          </Link>
+          <Link
+            href="/contact"
+            className="text-gray-800 hover:text-gray-700 font-semibold hover:font-bold hover:text-pink-500 duration-500"
           >
             Contact
-          </a>
+          </Link>
           <a
             href="#"
-            className="text-gray-800 hover:text-gray-700 hover:font-semibold duration-500"
+            className="text-gray-800 hover:text-gray-700 font-semibold hover:font-bold hover:text-pink-500 duration-500"
           >
             Services
           </a>
-          <Link
-            href="/login"
-            className="flex items-center gap-2 bg-gray-800 px-3 py-2 rounded-md text-white hover:bg-opacity-60 hover:font-semibold duration-500"
-          >
-            <IoIosLogIn /> Login
-          </Link>
+          <UserMenu />
         </div>
 
         {/* Responsive Menu Button */}
