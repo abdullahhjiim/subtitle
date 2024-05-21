@@ -1,13 +1,19 @@
+
+
+/* eslint-disable @next/next/no-img-element */
+
 import Link from "next/link";
 import { IoIosLogIn } from "react-icons/io";
 import { auth } from "../../../auth";
+import Logout from "./Logout";
+
 
 const UserMenu = async () => {
   const session = await auth();
-  console.log("session", session.user);
+  console.log("my session", session);
   return (
     <div className="">
-      {session?.user?.id ? (
+      {!session?.user?.email ? (
         <Link
           href="/login"
           className="flex items-center gap-2 bg-gray-800 px-3 py-2 rounded-md text-white hover:bg-opacity-80 hover:text-pink-500 font-semibold hover:font-bold  duration-500"
@@ -45,14 +51,7 @@ const UserMenu = async () => {
                   Profile
                 </a>
               </li>
-              <li>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                >
-                  Logout
-                </a>
-              </li>
+              <Logout />
             </ul>
           </div>
         </div>

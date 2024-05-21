@@ -6,7 +6,6 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
-
 export const {
     handlers: { GET, POST },
     auth,
@@ -15,8 +14,14 @@ export const {
 } = NextAuth({
     adapter: MongoDBAdapter(mongoClientPromise, {databaseName: process.env.ENVIRONMENT }),
     session: {
-        strategy: 'jwt',
+        strategy : "jwt"
     },
+    // session: {
+    //     jwt: true,
+    // },
+    // jwt: {
+    //     secret: process.env.JWT_SECRET,
+    // },
     providers: [
         CredentialsProvider({
             credentials: {
@@ -25,11 +30,12 @@ export const {
             },
 
             async authorize(credentials) {
+                console.log("jim credentials", credentials);
                 if (credentials == null) return null;
 
                 try {
                     const user = await userModel.findOne({email: credentials.email});
-                    console.log({user})
+                    console.log("jim user ", user);
                     if (user) {
                         const isMatch = await bcrypt.compare(
                             credentials.password,
@@ -51,15 +57,23 @@ export const {
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-          }),
+        }),
     ],
     callbacks: {
-        async session({ session, token, user }) {
-          // Send properties to the client, like an access_token and user id from a provider.
-          session.accessToken = token.accessToken
-          session.user.id = token.id
-          console.log(session, user, token );
-          return session
-        }
-      }
+
+         jwt({ token, user }) {
+            if (user) { 
+              token.id = user.id
+              token.type = user.type
+
+              console.log(token);
+            }
+            return token
+          },
+
+          session (session, user) {
+            console.log(user);
+          }
+        
+    }
 })

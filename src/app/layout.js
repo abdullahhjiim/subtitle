@@ -1,6 +1,7 @@
 import Footer from "@/components/common/Footer";
 import Navbar from "@/components/common/Navbar";
 import WrapCom from "@/components/wrapper/WrapCom";
+import { dbConnect } from "@/service/mongo";
 import { Rubik } from "next/font/google";
 import "./globals.css";
 
@@ -10,6 +11,8 @@ export const metadata = {
   title: "Our Subtitle",
   description: "Bangla movie subtitle",
 };
+
+await dbConnect();
 
 export default function RootLayout({ children }) {
   return (
