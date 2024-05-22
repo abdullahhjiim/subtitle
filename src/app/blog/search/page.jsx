@@ -35,9 +35,10 @@ const SearchPage = () => {
     }
 }
 
+
   const fetchSuggestions =  debounce((query) => {
-    console.log(query);
-  }, 2000);
+    
+  }, 700);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);

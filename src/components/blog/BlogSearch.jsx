@@ -15,7 +15,7 @@ const BlogSearch = () => {
   return (
     <div className="">
         <h3 className="pb-1 font-medium">You may search from here</h3>
-      <div className="w-[400px]">
+      <div className="max-w-[400px]">
         <ReactTyped
           strings={[
             "Blog Search Global ... Bangla Subtitle",
