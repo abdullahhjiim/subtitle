@@ -22,6 +22,7 @@ const BlogSearch = () => {
          <button onClick={() => { setIsOpen(true) }} className="px-2 py-1 bg-cyan-900 rounded-md mb-2 text-white hover:bg-opacity-70 duration-500">Write Blog</button>
         </div>
       <div className="w-[400px]">
+
         <ReactTyped
           strings={[
             "Blog Search Global ... Bangla Subtitle",

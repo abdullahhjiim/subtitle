@@ -52,6 +52,9 @@ const SearchPage = () => {
 
   const fetchSuggestions = debounce((query) => {
     setQuery(query);
+
+
+
   }, 700);
 
   const handleSearchChange = (e) => {
