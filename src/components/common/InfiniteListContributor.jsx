@@ -118,7 +118,6 @@ const InfiniteListContributor = ({ type }) => {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       .then((res) => {
-        console.log(res?.data);
         let cloneData = offsetData > 1 ? [...data] : [];
         setData([...cloneData, ...res?.data?.data]);
         setLoading(false);

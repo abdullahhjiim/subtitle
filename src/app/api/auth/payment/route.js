@@ -1,13 +1,12 @@
 import { bookingModel } from "@/models/booking-model";
 import { dbConnect } from "@/service/mongo";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 import mongoose from "mongoose";
 
 export const POST = async (request) => {
   const { hotelId, userId, checkin, checkout } = await request.json();
 
-  console.log(hotelId, userId, checkin, checkout);
 
   await dbConnect();
 
@@ -18,7 +17,6 @@ export const POST = async (request) => {
     checkout
   };
 
-  console.log(payload);
 
   try {
     await bookingModel.create(payload);

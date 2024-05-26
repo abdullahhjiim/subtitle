@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
+
 const userSchema = new Schema({
   name: {
     required: true,
@@ -22,7 +23,12 @@ const userSchema = new Schema({
     required: false,
     type: Number,
     default: 3,
-  }
+  },
+  bio : {
+    required : false,
+    type: String
+  },
+  favouriteBlogs : [String]
 });
 
 

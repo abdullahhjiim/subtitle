@@ -44,11 +44,17 @@ const Signup = () => {
         },
         body: data,
       });
-      console.log(res);
+      
       res.status === 201 &&
         router.push("/login");
+
+      if(res.status == 400) {
+        setError('Email already exits');
+      }else {
+        setError('Something went wrong , please call to system admin..');
+      }
+
     } catch (error) {
-      console.log(error);
       setError(error.message);
     }
   }
@@ -75,10 +81,11 @@ const Signup = () => {
           style={{ backgroundImage: `url('/signup.png')` }}
         ></div>
         <div className="w-full p-8 lg:w-1/2">
-        <div className="text-xl text-red-500 text-center">{error && error}</div>
+        
           <h2 className="text-2xl font-bold text-gray-700 text-center">
             Sign Up
           </h2>
+          <div className="text-xl text-red-500 text-center">{error && error}</div>
           <form className="mt-4" onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block text-gray-700" htmlFor="name">

@@ -103,7 +103,6 @@ const MovieCardList = () => {
   };
 
   const handleClick = () => {
-    console.log("sss");
   };
   return (
     <div className="relative bg-gray-100 p-8 rounded-lg shadow-lg">

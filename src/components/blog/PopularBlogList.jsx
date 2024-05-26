@@ -1,13 +1,16 @@
-import { getPopularBlog } from "@/lib/blog";
+import { getFavouriteBlogs } from "@/app/actions";
 import Link from "next/link";
 
 const PopularBlogList = async () => {
-  const data = await getPopularBlog();
+  
+  const data = await getFavouriteBlogs();
+
+  console.log(data);
 
   return (
     <ul className="space-y-5 my-5">
-      {data?.blogs?.length == 0 && <p>No popular blogs found</p>}
-      {data?.blogs.map((item, index) => {
+      {data?.length == 0 && <p>No favourite blogs found</p>}
+      {data?.map((item, index) => {
         return (
           <li key={index}>
             <Link
@@ -19,7 +22,7 @@ const PopularBlogList = async () => {
             <p className="text-slate-600 text-sm">
               by
               <Link href={`/blog/profile/${item.author.id}`} className="ml-2">
-                {item.author?.firstName} - {item.author?.lastName}
+                {item.author?.name} 
               </Link>
               <span>·</span> {item.likes?.length} Likes
             </p>

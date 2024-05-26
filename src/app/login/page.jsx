@@ -1,9 +1,10 @@
 import Login from "@/components/auth/Login";
+import { redirect } from "next/navigation";
 import { auth } from "../../../auth";
-const LoginPage = () => {
-  const session = auth();
+const LoginPage = async () => {
+  const session = await auth();
   if(session?.user) {
-    redirect('/');
+    redirect('/dashboard');
   }
   return (
     <div className="">

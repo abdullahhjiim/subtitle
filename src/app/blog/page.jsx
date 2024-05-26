@@ -4,7 +4,8 @@ export const metadata = {
   title: " Blog Page",
 };
 
-export default function Blog() {
+export default async function Blog() {
+
   return (
     <div>
       <BlogPage />

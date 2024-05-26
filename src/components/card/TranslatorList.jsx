@@ -96,7 +96,6 @@ const users = [
 
 const TranslatorList = () => {
   const handleClick = () => {
-    console.log("ss");
   };
   return (
     <div className="">

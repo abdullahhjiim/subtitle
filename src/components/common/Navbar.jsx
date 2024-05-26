@@ -1,12 +1,9 @@
 
 import Link from "next/link";
-import { auth } from "../../../auth";
 import SearchCm from "../header/SearchCm";
 import UserMenu from "../header/UserMenu";
 
 const Navbar = async () => {
- const session = await auth();
- console.log(session);
   return (
     <nav className="bg-white shadow-md py-4 px-6 sticky top-0 z-50">
       <div className="container mx-auto grid grid-cols-3 items-center">

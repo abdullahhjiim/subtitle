@@ -30,7 +30,6 @@ const Login = () => {
 
     try {
       const response = await login(data);
-      console.log(response);
       if (!!response.error) {
         setError(response.error);
       } else {
@@ -54,7 +53,7 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="flex bg-white rounded-lg shadow-lg overflow-hidden w-3/4 lg:w-1/2">
         <div
-          className="hidden lg:block lg:w-1/2 bg-cover"
+          className="hidden lg:block lg:w-1/2 bg-cover min-h-[450px]"
           style={{ backgroundImage: `url('/login.png')` }}
         ></div>
         <div className="w-full p-8 lg:w-1/2">

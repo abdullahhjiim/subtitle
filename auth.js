@@ -30,12 +30,10 @@ export const {
             },
 
             async authorize(credentials) {
-                console.log("jim credentials", credentials);
                 if (credentials == null) return null;
 
                 try {
                     const user = await userModel.findOne({email: credentials.email});
-                    console.log("jim user ", user);
                     if (user) {
                         const isMatch = await bcrypt.compare(
                             credentials.password,
@@ -66,13 +64,11 @@ export const {
               token.id = user.id
               token.type = user.type
 
-              console.log(token);
             }
             return token
           },
 
           session (session, user) {
-            console.log(user);
           }
         
     }

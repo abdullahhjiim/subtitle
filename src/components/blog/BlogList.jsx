@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { BASE_URL } from "@/helpers/config";
 import { formatHumanReadableDate } from "@/helpers/utility";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -11,15 +10,31 @@ const BlogList = () => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+      const getuser = async () => {
+          const res = await fetch('/api/auth/user');
+          const user = await res.json();
+          setUserData(user);
+      }
+      
+      getuser();
+  
+  },[]);
+
+
   let limit = 10;
   useEffect(() => {
     const fetchBlogs = async () => {
-      const res = await fetch(`${BASE_URL}/blogs?page=${page}&limit=${limit}`);
-      const newBlogs = await res.json();
 
-      setBlogs((prevBlogs) => [...prevBlogs, ...newBlogs?.blogs]);
+      const res = await fetch(`/api/blogs?page=${page}&limit=${limit}`, {cache : 'no-store'});
+      const result = await res.json();
 
-      if (blogs.length + limit >= newBlogs.total) {
+
+      setBlogs((prevBlogs) => [...prevBlogs, ...result?.blogs]);
+
+      if (result.blogs.length + limit >= result.totalBlogs) {
         setHasMore(false);
       }
     };
@@ -33,6 +48,17 @@ const BlogList = () => {
       setPage((page) => page + 1);
     }
   };
+
+  const prepareContent = (fullText) => {
+    const words = fullText.split(' ');
+
+    if (words.length > 26) {
+      const truncatedText = words.slice(0, 26).join(' ') + '...';
+      return truncatedText;
+    } else {
+      return fullText;
+    }
+  }
 
   return (
     <div className="space-y-3 md:col-span-5">
@@ -61,8 +87,8 @@ const BlogList = () => {
           let image = imgNameList[index % 3];
 
           return (
-            <div className="blog-card my-2" key={item.id + index}>
-              <Link href={`/blog/${item.id}`}>
+            <div className="blog-card my-2" key={item._id + index}>
+              <Link href={`/blog/${item._id}`}>
                 <img
                   className="blog-thumb"
                   src={`/assets/blogs/${image}`}
@@ -71,25 +97,25 @@ const BlogList = () => {
               </Link>
               <div className="mt-2 relative">
                 <Link
-                  href={`/blog/${item.id}`}
+                  href={`/blog/${item._id}`}
                   className="text-slate-300 text-xl lg:text-2xl"
                 >
                   {item.title}
                 </Link>
-                <p className="mb-6 text-base text-slate-500 mt-1">
-                  {item.content}
+                <p className="mb-6 text-base text-slate-500 mt-1 overflow-hidden">
+                  {prepareContent(item.content)}
                 </p>
 
                 <div className="flex justify-between items-center">
                   <div className="flex items-center capitalize space-x-2">
                     <div className="avater-img bg-indigo-600 text-white">
-                      <span className="">{item.author?.firstName[0]}</span>
+                      <span className="">{item.author?.name[0]}</span>
                     </div>
 
                     <div>
                       <h5 className="text-slate-500 text-sm">
-                        <Link href={`/blog/profile/${item.author.id}`}>
-                          {item.author?.firstName} {item.author?.lastName}
+                        <Link href={`/blog/profile/${item.author._id}`}>
+                          {item.author?.name}
                         </Link>
                       </h5>
                       <div className="flex items-center text-xs text-slate-700">
@@ -106,9 +132,10 @@ const BlogList = () => {
                 </div>
 
                 <div className="absolute right-0 top-0">
-                  <button>
+                  {userData?._id == item.author?._id && (<button>
                     <img src="/assets/icons/3dots.svg" alt="3dots of Action" />
-                  </button>
+                  </button>)}
+                  
 
                   {/* <div className="action-modal-container">
                     <button className="action-menu-item hover:text-lwsGreen">

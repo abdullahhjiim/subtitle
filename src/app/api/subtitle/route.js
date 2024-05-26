@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 
 export const POST = async (request) => {
   const data = await request.json();
-  console.log(data);
   await dbConnect();
 
   try {
@@ -17,6 +16,5 @@ export const POST = async (request) => {
       status: 500,
     });
 
-    console.log("eerrorr",err);
   }
 };

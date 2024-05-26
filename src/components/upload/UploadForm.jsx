@@ -9,8 +9,6 @@ const UploadForm = () => {
 
   async function onHandleSubmit (data) {
 
-    console.log(data);
-
     try {
 
       const res = await fetch("/api/subtitle", {
@@ -20,13 +18,10 @@ const UploadForm = () => {
         },
         body: JSON.stringify(data),
       });
-      console.log(res);
       if(res.status === 201) {
-        console.log('sucees');
         reset();
       }
     } catch (error) {
-      console.log(error);
       setError(error.message);
     }
   }
@@ -34,7 +29,6 @@ const UploadForm = () => {
 
   const onSubmit = (data) => {
     onHandleSubmit(data);
-    console.log(data);
   };
 
   return (

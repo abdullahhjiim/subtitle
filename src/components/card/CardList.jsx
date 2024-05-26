@@ -70,7 +70,6 @@ const cards = [
 
 const CardList = () => {
   const handleClick = () => {
-    console.log("come here");
   };
   return (
     <div className="p-4">

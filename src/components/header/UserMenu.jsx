@@ -10,7 +10,9 @@ import Logout from "./Logout";
 
 const UserMenu = async () => {
   const session = await auth();
-  console.log("my session", session);
+
+  console.log(session);
+
   return (
     <div className="">
       {!session?.user?.email ? (

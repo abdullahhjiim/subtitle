@@ -6,7 +6,6 @@ import { NextResponse } from "next/server";
 export const POST = async (request) => {
   const { name, email, password } = await request.json();
 
-  console.log(name, email, password);
 
   await dbConnect();
 
@@ -18,7 +17,6 @@ export const POST = async (request) => {
     password: hashedPassword,
   };
 
-  console.log(newUser);
 
   try {
     await userModel.create(newUser);
@@ -26,17 +24,25 @@ export const POST = async (request) => {
       status: 201,
     });
   } catch (err) {
-    return new NextResponse(err.message, {
-      status: 500,
-    });
+    
 
-    console.log("eerrorr",err);
     
     if (err.code === 11000) {
       // return res.status(400).json({ message: 'Email already exists' });
-      return new NextResponse('Email already exists', {
+      // return new NextResponse('Email already exists', {
+      //   status: 500,
+      // });
+
+      return new NextResponse(err.message, {
         status: 400,
       });
+    }else {
+      return new NextResponse(err.message, {
+        status: 500,
+      });
     }
+
+    
+
   }
 };
