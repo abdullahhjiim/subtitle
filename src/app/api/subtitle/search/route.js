@@ -12,7 +12,7 @@ export async function GET(request) {
     }
 
     const {searchParams} = new URL(request.url);
-    let title =  searchParams.get("title");
+    let title =  searchParams.get("title").trim().toLowerCase();
     let year  =  searchParams.get("year");
 
     let url = `&t=${title}`;
@@ -23,14 +23,17 @@ export async function GET(request) {
     }
 
     const myImdbFound = await imdbModel.findOne({"title" : title});
+
+
     if(myImdbFound) {
-        return new NextResponse(JSON.stringify(myImdbFound));
+        return new NextResponse(JSON.stringify(JSON.parse(myImdbFound?.content)));
     }
 
     let finalUrl = `${IMDB_URL}${url}`;
 
-    const imdb = await fetch(finalUrl, {method: "GET"});
+    const res = await fetch(finalUrl, {method: "GET"});
 
+    const imdb = await res.json();
     console.log("imdbdddo : ", imdb, finalUrl);
     
     if(imdb) {
@@ -50,3 +53,5 @@ export async function GET(request) {
     return new NextResponse(error, { status: 400 });
   }
 }
+
+

@@ -31,20 +31,27 @@ const ReleasePage = () => {
   };
 
   const handleSearch = async () => {
+    setError(null);
     setLoading(true);
     const title = formData?.title;
     const year = formData?.year;
-    try{
-         const res = await fetch(`/api/subtitle/search?title=${title}&year=${year}`, {method: "GET"});
-         const data = await res.json();
-         setSearchData(data);
-
-    } catch(err) {
+    try {
+      const res = await fetch(
+        `/api/subtitle/search?title=${title}&year=${year}`,
+        { method: "GET" }
+      );
+      const data = await res.json();
+      if (data?.Error) {
+        setError(data?.Error);
+      } else {
+        setSearchData(data);
+      }
+    } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   console.log(searchData);
 
@@ -52,21 +59,46 @@ const ReleasePage = () => {
     <div className="ml-8 w-full">
       <div className="flex justify-between gap-12 rounded-md bg-gray-100 p-8">
         <div className="w-1/2 flex justify-center ml-8">
-          {error && <p className="text-red-500"> {error}</p>}
+          
           <div>
-            <h3 className="text-2xl font-bold p-2 mb-4 ">Search Subtitle</h3>
+          
+            {searchData ? <h3 className="text-2xl font-bold p-2 mb-4 "> Found this movie </h3>  :  <h3 className="text-2xl font-bold p-2 mb-4 ">Search Subtitle</h3>}
             {searchData ? (
               <>
                 <img
-                  src="https://i.ytimg.com/vi/hRBHeFKmxo0/sddefault.jpg"
+                  src={searchData?.Poster}
                   alt="Release Image"
                   className="w-full h-80 object-cover mb-4 rounded-md"
                 />
-                <h2 className="text-2xl font-bold mb-2">Release Information</h2>
-                <p className="text-gray-700"></p>
+                <h2 className="text-2xl font-bold mb-2">More Information</h2>
+                <div className="grid grid-cols-2 gap-3">
+                  <p className="text-sm font-semibold">
+                    Title : {searchData?.Title}
+                  </p>
+                  <p className="text-sm font-semibold">
+                    Year : {searchData?.Year}
+                  </p>
+                  <p className="text-sm font-semibold">
+                    Box Office : {searchData?.BoxOffice}
+                  </p>
+                  <p className="text-sm font-semibold">
+                    Imdb Rating : {searchData?.imdbRating}
+                  </p>
+                  <p className="text-sm font-semibold">
+                    Awards : {searchData?.Awards}
+                  </p>
+                  
+                  <p className="text-sm font-semibold">
+                    Genre : {searchData?.Genre}
+                  </p>
+                </div>
+                <div className="mt-8">
+                  <p className="text-sm font-semibold">{searchData?.Plot}</p>
+                </div>
               </>
             ) : (
               <div className="w-full flex flex-col gap-1">
+                {error && <p className="text-red-500"> {error}</p>}
                 <label htmlFor="">Title of Movie, TV Series, Documentery</label>
                 <input
                   type="text"
@@ -75,8 +107,7 @@ const ReleasePage = () => {
                   placeholder="Title"
                   className="min-w-[400px] px-2 py-1 border-2 border-gray-500 rounded-md"
                 />{" "}
-                <br />
-                <label htmlFor="">Year of </label>
+                {/* <label htmlFor="">Year of </label>
                 <select
                   name="year"
                   id="year"
@@ -84,8 +115,8 @@ const ReleasePage = () => {
                   className="min-w-[400px] px-2 py-1 border-2 border-gray-500 rounded-md"
                 >
                   {yearOptions}
-                </select>
-                <div className="flex justify-end mt-8 mr-2">
+                </select> */}
+                <div className="flex justify-end mt-1 mr-2">
                   <button
                     onClick={handleSearch}
                     disabled={loading}
@@ -99,7 +130,7 @@ const ReleasePage = () => {
           </div>
         </div>
         <div className="w-1/2 flex items-center justify-center p-8">
-          <UploadForm />
+          {searchData && <UploadForm basicData={{title: searchData?.Title, year: searchData?.Year, genre: searchData?.Genre, language : searchData?.Language, thumbnail: searchData?.Poster}} />}
         </div>
       </div>
     </div>

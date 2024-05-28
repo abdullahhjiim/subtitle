@@ -1,6 +1,45 @@
 import mongoose, { Schema } from "mongoose";
 
+const AuthorSchema = new Schema({
+
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  bio: String,
+  image: String,
+});
+
 const subtitleSchema = new Schema({
+    title: {
+      required: true,
+      type: String
+    },
+    thumbnail: {
+      required: true,
+      type: String
+    },
+    year: {
+      required: true,
+      type: String
+    },
+    genre: {
+      required: true,
+      type: String
+    },
+    language: {
+      required: true,
+      type: String,
+      default: 'English'
+    },
+    author : {
+      type : AuthorSchema,
+      required : true
+    },
     filePath: {
       required: true,
       type: String
@@ -32,4 +71,4 @@ const subtitleSchema = new Schema({
     
   });
 
-export const subtitleModel = mongoose.models.subtitles ?? mongoose.model("subtitles", subtitleSchema);
+export const subtitleModel = mongoose.model("subtitles", subtitleSchema);
