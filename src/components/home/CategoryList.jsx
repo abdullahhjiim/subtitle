@@ -1,60 +1,10 @@
+import { getConfigurationByType } from "@/app/actionfrons";
 import { FaArrowRight } from "react-icons/fa";
 
-const CategoryList = ({ title, id }) => {
-  const categories = [
-    "Action",
-    "Comedy",
-    "Drama",
-    "Sci-Fi",
-    "Thriller",
-    "Action",
-    "Comedy",
-    "Drama",
-    "Sci-Fi",
-    "Thriller",
-    "Action",
-    "Comedy",
-    "Drama",
-    "Sci-Fi",
-    "Thriller",
-    "Action",
-    "Comedy",
-    "Drama",
-    "Sci-Fi",
-    "Thriller",
-    "Rom Com",
-    "Action",
-    "Comedy",
-    "Drama",
-    "Sci-Fi",
-    "Thriller",
-    "Action",
-    "Comedy",
-    "Drama",
-    "Sci-Fi",
-    "Thriller",
-    "Action",
-    "Comedy",
-    "Drama",
-    "Sci-Fi",
-    "Thriller",
-    "Action",
-    "Comedy",
-    "Drama",
-    "Sci-Fi",
-    "Thriller",
-    "Action",
-    "Comedy",
-    "Drama",
-    "Sci-Fi",
-    "Thriller",
-    "Rom Com",
-    "Action",
-    "Comedy",
-    "Drama",
-    "Sci-Fi",
-    "Thriller",
-  ];
+const CategoryList = async ({ title }) => {
+  
+  const genres = await getConfigurationByType(title);
+  const genresList = genres?.configuration?.value ? genres?.configuration?.value.split(",") : [];
 
   return (
     <div className="max-w-md mx-auto bg-white overflow-hidden">
@@ -63,7 +13,7 @@ const CategoryList = ({ title, id }) => {
           {title} <FaArrowRight />
         </h2>
         <div className="flex flex-wrap justify-center">
-          {categories.map((category, index) => (
+          {genresList.map((category, index) => (
             <span
               key={index}
               className="inline-block bg-gray-600 text-white px-3 py-1 rounded-full text-sm font-semibold m-1"

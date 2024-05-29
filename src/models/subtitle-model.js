@@ -68,7 +68,16 @@ const subtitleSchema = new Schema({
       required: false,
       type: Number
     },
-    
+    status : {
+      required : true,
+      type : Number,
+      default: 1,
+    },
+    ratings : {
+      type : Number,
+    },
+    createdAt: { type: Date, default: Date.now },
+
   });
 
-export const subtitleModel = mongoose.model("subtitles", subtitleSchema);
+export const subtitleModel = mongoose.models.subtitles || mongoose.model("subtitles", subtitleSchema);

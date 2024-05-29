@@ -21,7 +21,7 @@ const BlogSearch = () => {
         <h3 className="pb-1 font-medium">You may search from here </h3>
          <button onClick={() => { setIsOpen(true) }} className="px-2 py-1 bg-cyan-900 rounded-md mb-2 text-white hover:bg-opacity-70 duration-500">Write Blog</button>
         </div>
-      <div className="w-[400px]">
+      <div className="w-full">
 
         <ReactTyped
           strings={[
@@ -40,7 +40,7 @@ const BlogSearch = () => {
             type="text"
             placeholder="Blog Search Global ... "
             onChange={handleChange}
-            className="py-2 pl-10 pr-4  block w-full rounded-lg border border-gray-300 focus:outline-none focus:border-gray-500"
+            className="w-full py-2 pl-10 pr-4  block w-full rounded-lg border border-gray-300 focus:outline-none focus:border-gray-500"
           />
         </ReactTyped>
       </div>

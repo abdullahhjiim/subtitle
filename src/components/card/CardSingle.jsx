@@ -1,32 +1,31 @@
-// components/CardListItem.js
+import { FaRegStar } from "react-icons/fa";
+import { GiDuration } from "react-icons/gi";
+import { IoTimerOutline } from "react-icons/io5";
 
 const CardSingle = ({
-  photo,
-  title,
-  subtitle,
-  author,
-  authorPhoto,
+  data,
   buttonLabel,
   buttonLink,
 }) => {
+
   return (
     <div className="flex items-center bg-white shadow-lg rounded-lg overflow-hidden h-24 mb-4">
       <div className="h-full w-24 flex-shrink-0">
-        <img src={photo} alt={title} className="object-cover h-full w-full" />
+        <img src={data?.thumbnail} alt={data?.title} className="object-cover h-full w-full" />
       </div>
-      <div className="flex flex-col justify-between flex-grow p-4">
+      <div className="flex flex-col justify-between flex-grow px-4 ">
         <div>
-          <h2 className="text-xl font-bold text-gray-800">{title}</h2>
-          <p className="text-gray-600">{subtitle}</p>
+          <h2 className="text-xl font-bold text-gray-800 -mt-4">{data?.title}</h2>
+          <div className="flex gap-3 text-sm mt-2">
+            <div className="flex gap-2 items-center bg-gray-300 px-2 py-1 rounded-md"> <IoTimerOutline /> <span>20 min ago</span> </div>
+            <div className="flex gap-2 items-center bg-gray-300 px-2 py-1 rounded-md"> <FaRegStar /> <span>{data?.ratings ?? 2}</span> </div>
+            <div className="flex gap-2 items-center bg-gray-300 px-2 py-1 rounded-md"> <GiDuration /> <span>{data?.runtime ?? 0}</span> </div>
+          </div>
         </div>
       </div>
       <div className="flex items-center justify-center space-x-2 w-48">
-        <img
-          src={authorPhoto}
-          alt={author}
-          className="rounded-full w-12 h-12"
-        />
-        <p className="text-gray-500">{author}</p>
+        <p className="w-8 h-8 rounded-full bg-purple-600 text-white text-center uppercase flex justify-center flex-col">{data?.author?.name[0]}</p>
+        <p className="text-gray-500">{data?.author?.name}</p>
       </div>
       <div className="flex-shrink-0 pr-4">
         <a

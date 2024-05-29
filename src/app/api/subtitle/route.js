@@ -1,4 +1,5 @@
 import { subtitleModel } from "@/models/subtitle-model";
+import { userModel } from "@/models/user-model";
 import { dbConnect } from "@/service/mongo";
 import { NextResponse } from "next/server";
 import { auth } from "../../../../auth";
@@ -14,12 +15,19 @@ export const POST = async (request) => {
     const data = await request.json();
     await dbConnect();
 
+
     const author = {
       name: session?.user?.name,
       email: session?.user?.email,
     };
 
-    await subtitleModel.create({ ...data, author });
+    const subtitle = await subtitleModel.create({ ...data, author });
+    const user = await userModel.findOne({"email" : session?.user.email});
+
+    user.uploads = subtitle._id;
+
+    await user.save();
+    
     return new NextResponse("Subtitle has been created", {
       status: 201,
     });

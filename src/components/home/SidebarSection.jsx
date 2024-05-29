@@ -9,10 +9,10 @@ const SidebarSection = () => {
         <FileUpload />
       </div>
       <div className="mt-4">
-        <CategoryList title={"Movie Categories"} />
+        <CategoryList title={"GENRES"} />
       </div>
       <div className="mt-4">
-        <CategoryList title={"Industries"} />
+        <CategoryList title={"INDUSTRIES"} />
       </div>
       <div className="mt-4">
         <Contributor />

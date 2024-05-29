@@ -28,8 +28,17 @@ const userSchema = new Schema({
     required : false,
     type: String
   },
-  favouriteBlogs : [String]
+  status : {
+    required : true,
+    type : Number,
+    default: 1,
+  },
+  favouriteBlogs : [String],
+  uploads: [{ type: Schema.Types.ObjectId, ref: 'subtitleModel' }],
+  downloads: [{ type: Schema.Types.ObjectId, ref: 'subtitleModel' }],
+
 });
 
 
-export const userModel = mongoose.models.users ?? mongoose.model("users", userSchema);
+// export const userModel = mongoose.models.users ?? mongoose.model("users", userSchema);
+export const userModel = mongoose.models.users || mongoose.model("users", userSchema);

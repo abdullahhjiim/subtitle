@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { FaChartBar, FaCloudUploadAlt, FaHome, FaUser } from 'react-icons/fa';
+import { FaGear } from 'react-icons/fa6';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 
 
@@ -20,10 +21,10 @@ const Sidebar = () => {
     <div className="min-w-[270px] rounded-md w-64 bg-gradient-to-r from-purple-500 to-indigo-600 text-white">
       <div className="p-6 text-2xl font-bold">My Dashboard</div>
       <ul className="space-y-2">
-        <li className="px-4 py-2 hover:bg-indigo-700 flex items-center">
+        <Link href={'/dashboard'}><li className="px-4 py-2 hover:bg-indigo-700 flex items-center">
           <FaHome className="mr-3" />
           Home
-        </li>
+        </li></Link>
         <li className="px-4 py-2 hover:bg-indigo-700 flex items-center justify-between" onClick={() => toggleSubMenu('dashboard')}>
           <div className="flex items-center">
             <FaChartBar className="mr-3" />
@@ -46,14 +47,30 @@ const Sidebar = () => {
         </li>
         {isOpen.users && (
           <ul className="pl-8 space-y-2">
-            <li className="px-4 py-2 hover:bg-indigo-600">Profile</li>
-            <li className="px-4 py-2 hover:bg-indigo-600">Settings</li>
+            <Link href={'/dashboard/users'}><li className="px-4 py-2 hover:bg-indigo-600">Users</li></Link>
+            <Link href={'/dashboard/uploaders'}><li className="px-4 py-2 hover:bg-indigo-600">Uploders</li></Link>
+            <Link href={'/dashboard/customers'}><li className="px-4 py-2 hover:bg-indigo-600">Customers</li></Link>
           </ul>
         )}
          <Link href="/dashboard/upload-subtitle" className="px-4 py-2 hover:bg-indigo-700 flex items-center">
           <FaCloudUploadAlt className="mr-3" />
           Upload Subtitle
         </Link>
+
+        <li className="px-4 py-2 hover:bg-indigo-700 flex items-center justify-between" onClick={() => toggleSubMenu('settings')}>
+          <div className="flex items-center">
+            <FaGear className="mr-3" />
+            Settings
+          </div>
+          <MdKeyboardArrowDown className={`${isOpen.settings ? 'transform rotate-180' : ''} transition-transform`} />
+        </li>
+        {isOpen.settings && (
+          <ul className="pl-8 space-y-2">
+            <Link href={'/dashboard/configurations'}><li className="px-4 py-2 hover:bg-indigo-600">Configurations</li></Link>
+          </ul>
+        )}
+
+         
       </ul>
     </div>
   );
