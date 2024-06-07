@@ -5,7 +5,6 @@ const PopularBlogList = async () => {
   
   const data = await getFavouriteBlogs();
 
-  console.log(data);
 
   return (
     <ul className="space-y-5 my-5">

@@ -17,7 +17,6 @@ export async function GET() {
 
     const userData = await userModel.findOne({ "email": session?.user?.email });
 
-    console.log('sssss', userData);
     const blogs = await blogModel
       .find({ _id: { $in: userData?.favouriteBlogs } })
       .sort({ createdAt: 1 })

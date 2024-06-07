@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -12,6 +13,7 @@ const UploadForm = ({basicData}) => {
   } = useForm();
 
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   async function onHandleSubmit(data) {
     try {
@@ -25,7 +27,7 @@ const UploadForm = ({basicData}) => {
       });
       if (res.status === 201) {
         reset();
-        window.location.reload();
+        router.push('/dashboard/my-subtitle')
       }
     } catch (error) {
       setError(error.message);
@@ -186,6 +188,26 @@ const UploadForm = ({basicData}) => {
         {errors.framerate && (
           <p className="text-red-500 text-sm mt-1">
             {errors.framerate.message}
+          </p>
+        )}
+      </div>
+      <div>
+        <label className="block mb-2 text-sm font-medium text-gray-700">
+          Select Movie Type
+        </label>
+        <select
+          {...register("titleType", { required: "Type is required" })}
+          className={`w-full px-3 py-2 border ${
+            errors.framerate ? "border-red-500" : "border-gray-300"
+          } rounded-md`}
+        >
+          <option value="">Select Title Type</option>
+          <option value="Movie">Movie</option>
+          <option value="Tv Series">Tv Series</option>
+        </select>
+        {errors.titleType && (
+          <p className="text-red-500 text-sm mt-1">
+            {errors.title_type.message}
           </p>
         )}
       </div>

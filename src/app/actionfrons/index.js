@@ -1,13 +1,22 @@
 import { configurationModel } from "@/models/configuration-model";
 import { subtitleModel } from "@/models/subtitle-model";
+import { userModel } from "@/models/user-model";
 import { dbConnect } from "@/service/mongo";
 import { replaceMongoIdInArray } from "@/utils/data-util";
 
-export async function getSubtitle(type) {
+export async function getSubtitle(type, limit= 5) {
     await dbConnect();
     let subtitles = [];
     if(type == 'top-subttile') {
-        subtitles = await subtitleModel.find({}).sort({"ratings" : 1}).limit(5).lean();
+        subtitles = await subtitleModel.find({}).sort({"ratings" : 1}).limit(limit).lean();
+    }
+
+    if(type == 'top-movies') {
+        subtitles = await subtitleModel.find({"titleType" : "Movie"}).sort({"ratings" : 1}).limit(limit).lean();
+    }
+
+    if(type == 'tv-series') {
+        subtitles = await subtitleModel.find({"titleType" : "Tv Series"}).sort({"ratings" : 1}).limit(limit).lean();
     }
 
     subtitles  = replaceMongoIdInArray(subtitles);
@@ -20,4 +29,60 @@ export async function getConfigurationByType(type) {
 
     // configuration  = replaceMongoIdInObject(configuration);
     return {status : 200, configuration}
+}
+
+
+export async function getUsersByType(type) {
+    await dbConnect();
+    let users = [];
+
+    if(type == 'top_five_uploaders') {
+      users =  await userModel.aggregate([
+        {
+          $project: {
+            name: 1,
+            email: 1,
+            uploads: 1,
+            uploadsLength: {
+              $size: {
+                $ifNull: ["$uploads", []]
+              }
+            }
+          }
+        },
+        {
+          $sort: { uploadsLength: -1 }
+        },
+        {
+          $limit: 5
+        }
+      ]);
+    }else if(type == 'top_translator') {
+      users =  await userModel.aggregate([
+        {
+          $project: {
+            name: 1,
+            email: 1,
+            uploads: 1,
+            uploadsLength: {
+              $size: {
+                $ifNull: ["$uploads", []]
+              }
+            }
+          }
+        },
+        {
+          $sort: { uploadsLength: -1 }
+        },
+        {
+          $skip: 5
+        },
+        {
+          $limit: 15
+        }
+      ]);
+    }
+
+    return {status: 200, users}
+    
 }

@@ -1,6 +1,7 @@
 import { subtitleModel } from "@/models/subtitle-model";
 import { userModel } from "@/models/user-model";
 import { dbConnect } from "@/service/mongo";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { auth } from "../../../../auth";
 
@@ -15,7 +16,6 @@ export const POST = async (request) => {
     const data = await request.json();
     await dbConnect();
 
-
     const author = {
       name: session?.user?.name,
       email: session?.user?.email,
@@ -27,6 +27,8 @@ export const POST = async (request) => {
     user.uploads = subtitle._id;
 
     await user.save();
+
+    revalidatePath('/dashboard/my-subtitle');
     
     return new NextResponse("Subtitle has been created", {
       status: 201,

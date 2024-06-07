@@ -1,12 +1,11 @@
 
 import Link from "next/link";
-import SearchCm from "../header/SearchCm";
 import UserMenu from "../header/UserMenu";
 
 const Navbar = async () => {
   return (
     <nav className="bg-white shadow-md py-4 px-6 sticky top-0 z-50">
-      <div className="container mx-auto grid grid-cols-3 items-center">
+      <div className="container mx-auto grid grid-cols-2 items-center">
         {/* Logo */}
         <div className="flex-shrink-0">
           <Link href="/" className="text-xl font-bold text-gray-800">
@@ -15,7 +14,7 @@ const Navbar = async () => {
         </div>
 
         {/* Search Bar */}
-        <div className="hidden md:flex w-1/2 mx-4 justify-center">
+        {/* <div className="hidden md:flex w-1/2 mx-4 justify-center">
           <div className="relative w-full">
             <div className="absolute inset-y-0 left-0 flex items-center pl-3">
               <svg
@@ -35,16 +34,16 @@ const Navbar = async () => {
             </div>
             <SearchCm />
           </div>
-        </div>
+        </div> */}
 
         {/* Links */}
         <div className="hidden md:flex space-x-6 justify-end items-center">
-          <Link
+          {/* <Link
             href="/blog"
             className="text-gray-800 hover:text-gray-700 font-semibold hover:font-bold hover:text-pink-500 duration-500"
           >
             Blog
-          </Link>
+          </Link> */}
           <Link
             href="/contact"
             className="text-gray-800 hover:text-gray-700 font-semibold hover:font-bold hover:text-pink-500 duration-500"

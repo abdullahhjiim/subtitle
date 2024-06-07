@@ -1,15 +1,18 @@
-"use client";
 import Sidebar from "@/components/dashboard/Sidebar";
-import { SessionProvider } from "next-auth/react";
+import { redirect } from "next/navigation";
+import { auth } from "../../../auth";
 
 
-const Dashboard = ({children}) => {
+const Dashboard = async ({children}) => {
+  const session = await auth();
+
+  if(!session?.user) {
+    redirect('/login')
+  }
   return (
     <div className="container mx-auto p-8 flex min-h-[90vh]">
-      <SessionProvider>
       <Sidebar />
       {children}
-      </SessionProvider>
     </div>
   );
 };

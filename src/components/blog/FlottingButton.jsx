@@ -11,7 +11,6 @@ const FlottingButton = ({ blog }) => {
         const getuser = async () => {
             const res = await fetch('/api/auth/user');
             const user = await res.json();
-            console.log(user);
             setUserData(user);
         }
         

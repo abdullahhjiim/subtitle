@@ -52,9 +52,10 @@ const Sidebar = () => {
             <Link href={'/dashboard/customers'}><li className="px-4 py-2 hover:bg-indigo-600">Customers</li></Link>
           </ul>
         )}
-         <Link href="/dashboard/upload-subtitle" className="px-4 py-2 hover:bg-indigo-700 flex items-center">
+         
+        <Link href="/dashboard/all-subtitle" className="px-4 py-2 hover:bg-indigo-700 flex items-center">
           <FaCloudUploadAlt className="mr-3" />
-          Upload Subtitle
+          All Subtitle
         </Link>
 
         <li className="px-4 py-2 hover:bg-indigo-700 flex items-center justify-between" onClick={() => toggleSubMenu('settings')}>
@@ -69,8 +70,15 @@ const Sidebar = () => {
             <Link href={'/dashboard/configurations'}><li className="px-4 py-2 hover:bg-indigo-600">Configurations</li></Link>
           </ul>
         )}
-
-         
+        <Link href="/dashboard/upload-subtitle" className="px-4 py-2 hover:bg-indigo-700 flex items-center">
+          <FaCloudUploadAlt className="mr-3" />
+          Upload Subtitle
+        </Link>
+        
+        <Link href="/dashboard/my-subtitle" className="px-4 py-2 hover:bg-indigo-700 flex items-center">
+          <FaCloudUploadAlt className="mr-3" />
+          My Subtitle
+        </Link>
       </ul>
     </div>
   );

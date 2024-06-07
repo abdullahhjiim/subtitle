@@ -76,6 +76,17 @@ const subtitleSchema = new Schema({
     ratings : {
       type : Number,
     },
+    downloads : {
+      type : Number,
+    },
+    titleType : {
+      type: String,
+      default : 'Movie'
+    },
+    status: {
+      type : Number,
+      default: 1,
+    },
     createdAt: { type: Date, default: Date.now },
 
   });

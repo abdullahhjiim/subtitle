@@ -1,20 +1,15 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-const Search = ({ fromList, destination, checkin, checkout }) => {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
+const Search = ({ industriesList, genresList }) => {
+
 
   const [searchTerm, setSearchTerm] = useState({
-    destination: destination || "Puglia",
-    checkin: checkin,
-    checkout: checkout,
+    year: "",
+    genres: "",
+    industries: "",
   });
-
-  const [allowSearch, setAllowSearch] = useState(true);
 
   const handleInputs = (e) => {
     const name = e.target.name;
@@ -22,63 +17,57 @@ const Search = ({ fromList, destination, checkin, checkout }) => {
 
     const state = { ...searchTerm, [name]: value };
 
-    if (
-      new Date(state.checkin).getTime() > new Date(state.checkout).getTime()
-    ) {
-      setAllowSearch(false);
-    } else {
-      setAllowSearch(true);
-    }
     setSearchTerm(state);
   };
 
-  function doSearch(event) {
-    const params = new URLSearchParams(searchParams);
-
-    params.set("destination", searchTerm?.destination || "all");
-    if (searchTerm?.checkin && searchTerm?.checkout) {
-      params.set("checkin", searchTerm?.checkin);
-      params.set("checkout", searchTerm?.checkout);
+  const doSearch = () => {
+    if(searchTerm.year || searchTerm.genres || searchTerm.industries) {
+      console.log(searchTerm);
     }
+  }
 
-    if (pathname.includes("hotels")) {
-      replace(`${pathname}?${params.toString()}`);
-    } else {
-      replace(`${pathname}hotels?${params.toString()}`);
-    }
+  const years = [];
+  for (let year = 2024; year >= 1975; year--) {
+    years.push({ year });
   }
 
   return (
     <>
       <div className="lg:max-h-[250px] mt-6">
-        <div id="searchParams" className={fromList && "!shadow-none"}>
+        <div id="searchParams" className={"!shadow-none"}>
           <div>
-            <span>Language Type</span>
+            <span>Language</span>
             <h4 className="mt-2">
               <select
-                name="destination"
-                id="destination"
-                defaultValue={searchTerm.destination}
+                name="industries"
+                id="industries"
+                defaultValue={searchTerm.industries}
                 onChange={handleInputs}
               >
-                <option value="Puglia">English</option>
-                <option value="Catania">Hindi</option>
-                <option value="Palermo">Korean</option>
+                <option value="">Select Language</option>
+                {industriesList.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
               </select>
             </h4>
           </div>
           <div>
-            <span>Category</span>
+            <span>Genres</span>
             <h4 className="mt-2">
               <select
-                name="destination"
-                id="destination"
-                defaultValue={searchTerm.destination}
+                name="genres"
+                id="genres"
+                defaultValue={searchTerm.genres}
                 onChange={handleInputs}
               >
-                <option value="Puglia">Action</option>
-                <option value="Catania">Drama</option>
-                <option value="Palermo">Thriller</option>
+                <option value="">Select Genres</option>
+                {genresList.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
               </select>
             </h4>
           </div>
@@ -86,22 +75,25 @@ const Search = ({ fromList, destination, checkin, checkout }) => {
             <span>Year</span>
             <h4 className="mt-2">
               <select
-                name="destination"
-                id="destination"
-                defaultValue={searchTerm.destination}
+                name="year"
+                id="year"
+                defaultValue={searchTerm.year}
                 onChange={handleInputs}
               >
-                <option value="Puglia">2024</option>
-                <option value="Catania">2023</option>
-                <option value="Palermo">2022</option>
+                <option value="">Select Year</option>
+                {years.map((item) => (
+                  <option key={item.year} value={item.year}>
+                    {item.year}
+                  </option>
+                ))}
               </select>
             </h4>
           </div>
         </div>
       </div>
 
-      <button disabled={!allowSearch} className="search-btn" onClick={doSearch}>
-        🔍️ &nbsp; {fromList ? " Modify Search" : " Search"}
+      <button className="search-btn" onClick={doSearch}>
+        🔍️ &nbsp; { " Search"}
       </button>
     </>
   );

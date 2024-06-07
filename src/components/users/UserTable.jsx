@@ -41,7 +41,7 @@ const UserTable = ({ users, type }) => {
                     <form action={handleSubmit}>
                       <input type="hidden" name="status" value={user.status} />
                       <input type="hidden" name="id" value={user.id} />
-                      <button type="submit" className={`px-2 py-1  ${user.status === 1 ? 'bg-red-600' : 'bg-cyan-600'} rounded-md hover:bg-opacity-70 duration-500 text-white`}>Make {user.status == 2 ? 'Active' : 'Inactive'}</button>
+                      <button type="submit" className={`px-2 py-1  ${user.status === 1 ? 'bg-red-600' : 'bg-cyan-600'} rounded-md hover:bg-opacity-70 duration-500 text-white`}> {user.status == 2 ? 'Active' : 'Inactive'}</button>
                     </form>
                   </td>
                 </tr>

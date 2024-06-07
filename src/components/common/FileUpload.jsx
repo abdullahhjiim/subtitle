@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FaFileArrowUp } from "react-icons/fa6";
 
 const FileUpload = () => {
@@ -18,13 +19,13 @@ const FileUpload = () => {
         </p>
       </div>
       <div className="flex justify-center mt-4 mb-8">
-        <label
+        <Link href="/dashboard/upload-subtitle"><label
           htmlFor="file-upload"
           className="px-4 py-2 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded hover:opacity-90 cursor-pointer"
         >
           Upload
-          <input id="file-upload" type="file" className="hidden" />
-        </label>
+          {/* <input id="file-upload" type="file" className="hidden" /> */}
+        </label></Link>
       </div>
     </div>
   );

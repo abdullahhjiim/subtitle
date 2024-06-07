@@ -10,7 +10,6 @@ export async function GET(request) {
 
     await dbConnect();
 
-    console.log(query);
 
     if(query) {
         const blogs = await blogModel.find({

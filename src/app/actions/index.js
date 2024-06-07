@@ -1,6 +1,7 @@
 "use server"
 
 import { blogModel } from "@/models/blog-model";
+import { subtitleModel } from "@/models/subtitle-model";
 import { userModel } from "@/models/user-model";
 import { dbConnect } from "@/service/mongo";
 import { replaceMongoIdInArray } from "@/utils/data-util";
@@ -89,22 +90,6 @@ export async function getProfileData (profileId) {
     }
 }
 
-// export async function getYourBlogs(blogids) {
-//     try {
-  
-//       await dbConnect();
-  
-//       const blogs = await blogModel
-//         .find({ _id: { $in: blogids } })
-//         .sort({ createdAt: 1 })
-//         .limit(5);
-  
-//       return blogs;
-//     } catch (err) {
-//         throw new Error(err);
-//     }
-// }
-
 
 export async function uploadFile(formData, acceptFiles = [], fileSize = 1000,  fileDirectory = './public/uploads') {
     try {
@@ -173,7 +158,7 @@ export async function getAllUser (type = 1) {
     }
 }
 
-export async function statusToggle (data) {
+export async function statusToggle (data, type = 'users') {
     try{
 
         const session = await auth();
@@ -181,18 +166,46 @@ export async function statusToggle (data) {
             return {status : 401, message : 'Unauthrized'};
         }
 
-        const users = await userModel.findOne({"_id" : data.id});
+        let model = null;
 
-        let nextStatus = data.status == '1' ? 2 : 1;
-        users.status = nextStatus;
+        if(type == 'users') {
+            model = await userModel.findOne({"_id" : data.id});
+        }else if(type == 'my-subtitle' || type == 'all-subtitle') {
+            model = await subtitleModel.findOne({_id : data.id});
+        }
         
-        await users.save();
+        let nextStatus = data.status == '1' ? 2 : 1;
+        model.status = nextStatus;
+        
+        await model.save();
 
-        revalidatePath('/dashboard/users');
-        return {status : 200, message : "User found",  users};
+        revalidatePath(`/dashboard/${type}`);
+        return {status : 200, message : "Success"};
 
     } catch(error) {
         throw new Error(error);
     }
 }
 
+export async function getSubtitles(type, limit = 50) {
+    try {
+        const session = await auth();
+        if(!session) {
+            return {status : 401, message : 'Unauthrized'};
+        }
+
+        let subtitles = [];
+        if(type == 'my-subtile') {
+            subtitles = await subtitleModel.find({"author.email" : session?.user?.email}).limit(limit).lean();
+        }else if(type == 'all-subtile') {
+            subtitles = await subtitleModel.find({}).limit(limit).lean();
+        }
+
+        subtitles = replaceMongoIdInArray(subtitles);
+
+        return {status : 200, message : "Subtitle found",  subtitles};
+
+    } catch (error) {
+        throw new Error(error);
+    }
+}

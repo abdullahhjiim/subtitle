@@ -2,7 +2,7 @@ import SeeMoreBtn from "../common/SeeMoreBtn";
 import CardSingle from "./CardSingle";
 
 
-const CardList = ({subtitles}) => {
+const CardList = ({subtitles, type}) => {
 
   return (
     <div className="p-4">
@@ -15,7 +15,7 @@ const CardList = ({subtitles}) => {
         />
       ))}
       <div className="flex justify-center mt-8">
-        <SeeMoreBtn  />
+        <SeeMoreBtn  type={type} />
       </div>
     </div>
   );

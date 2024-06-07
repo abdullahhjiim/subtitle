@@ -6,33 +6,39 @@ import {
   TabsBody,
   TabsHeader,
 } from "@material-tailwind/react";
+import { useEffect, useState } from "react";
 import CardList from "../card/CardList";
 
-const data = [
-  {
-    label: "Latest",
-    value: "LATEST"
-  },
-  {
-    label: "Most Downloded",
-    value: "MOST_DOWNLOAD"
-  },
-
-  {
-    label: "Most Commented",
-    value: "MONST_COMMENTED"
-  },
-];
 
 const TabSubTitle = () => {
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      setLoading(true);
+
+      const res = await fetch('/api/subtitle/tabsdata', {method : "GET"});
+      const data = await res.json();
+
+      setData(data);
+      setLoading(false);
+    }
+
+    getData();
+
+  },[])
+
 
   return (
-    <Tabs id="custom-animation" value="TAB_VALUE">
+    <div className="">
+      {loading && <p>Loading...</p>}
+      {!loading && <Tabs id="custom-animation" value="Latest">
       <TabsHeader>
-        {data.map(({ label, value }) => (
+        {data.map(({ label }) => (
           <Tab
-            key={value}
-            value={value}
+            key={label}
+            value={label}
             activeClassName="bg-gray-500 rounded-md text-red-800"
             className="text-2xl font-semibold"
           >
@@ -47,13 +53,14 @@ const TabSubTitle = () => {
           unmount: { y: 250 },
         }}
       >
-        {data.map(({ value, desc }) => (
-          <TabPanel key={value} value={value}>
-            <CardList type={value} />
+        {data.map(({ value, label }) => (
+          <TabPanel key={label} value={label}>
+            <CardList subtitles={value} type={label} />
           </TabPanel>
         ))}
       </TabsBody>
-    </Tabs>
+    </Tabs>}
+    </div>
   );
 };
 

@@ -34,7 +34,6 @@ export async function PATCH(_request, { params }) {
         await dbConnect();
         const userData = await userModel.findOne({ "email": session?.user?.email });
     
-        console.log(userData, blogId);
 
         let favariteBlogIds = userData.favouriteBlogs;
         let found = favariteBlogIds.find((blog) => (blogId == blog));

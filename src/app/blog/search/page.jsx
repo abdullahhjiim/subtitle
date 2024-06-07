@@ -73,7 +73,6 @@ const SearchPage = () => {
     }
   }
 
-  console.log(searchData);
 
   return (
     <div className="">

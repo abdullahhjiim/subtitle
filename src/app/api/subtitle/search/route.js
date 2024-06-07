@@ -13,14 +13,14 @@ export async function GET(request) {
 
     const { searchParams } = new URL(request.url);
     let title = searchParams.get("title").trim().toLowerCase();
-    let year = searchParams.get("year");
+    // let year = searchParams.get("year");
 
     let url = `&t=${title}`;
     const newData = { title };
-    if (year != "undefined") {
-      url = `${url}&y=${year}`;
-      newData.year = year;
-    }
+    // if (year != "undefined") {
+    //   url = `${url}&y=${year}`;
+    //   newData.year = year;
+    // }
 
     const myImdbFound = await imdbModel.findOne({ title: title });
 
