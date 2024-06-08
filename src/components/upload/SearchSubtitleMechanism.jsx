@@ -30,7 +30,13 @@ const SearchSubtitleMechanism = ({ setSearchData }) => {
       if (data?.Error) {
         setError(data?.Error);
       } else {
-        setSearchListData([...searchListData, ...data?.Search]);
+
+        if(pageNumber == 1) {
+          setSearchListData([...data.Search]);
+        }else {
+          setSearchListData([...searchListData, ...data?.Search]);
+        }
+        
       }
     } catch (err) {
       setError(err.message);
@@ -61,9 +67,7 @@ const SearchSubtitleMechanism = ({ setSearchData }) => {
 
   const handleMoreData = () => {
     getSearchList(page + 1);
-
     setPage((prev) => prev + 1);
-
   }
 
   const handleSearch = () => {

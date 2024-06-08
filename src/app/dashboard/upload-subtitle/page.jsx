@@ -7,7 +7,6 @@ import { useState } from "react";
 const ReleasePage = () => {
   const [searchData, setSearchData] = useState(null);
  
-
   return (
     <div className="ml-8 w-full">
       <div className="flex justify-between gap-12 rounded-md bg-gray-100 p-8">

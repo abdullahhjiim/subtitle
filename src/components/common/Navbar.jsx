@@ -1,4 +1,5 @@
 
+import Image from "next/image";
 import Link from "next/link";
 import UserMenu from "../header/UserMenu";
 
@@ -9,7 +10,7 @@ const Navbar = async () => {
         {/* Logo */}
         <div className="flex-shrink-0">
           <Link href="/" className="text-xl font-bold text-gray-800">
-            Logo
+            <Image src='/assets/logo.svg' height={30} width={40} alt="subtitle bangla logo" />
           </Link>
         </div>
 

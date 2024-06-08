@@ -15,15 +15,33 @@ const UploadForm = ({basicData}) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  const  jsonToFormData = (json) => {
+    const formData = new FormData();
+  
+    for (const key in json) {
+      if (json.hasOwnProperty(key)) {
+        formData.append(key, json[key]);
+      }
+    }
+  
+    return formData;
+  }
+
   async function onHandleSubmit(data) {
+
+    const formData = jsonToFormData({...data, ...basicData});
+
+    formData.append("file", data.filePath[0] );
+    formData.append("allowedMimeTypes", [
+      "application/x-subrip"
+    ]);
+    formData.append("fileSizeLimit", "1048576");
+    
     try {
       setLoading(true);
       const res = await fetch("/api/subtitle", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({...data, ...basicData}),
+        body: formData
       });
       if (res.status === 201) {
         reset();
@@ -44,9 +62,10 @@ const UploadForm = ({basicData}) => {
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-4">
       <div>
         <label className="block mb-2 text-sm font-medium text-gray-700">
-          File Path
+          File [only .srt file support]
         </label>
         <input
+        type="file"
           {...register("filePath", { required: "File Path is required" })}
           className={`w-full px-3 py-2 border ${
             errors.filePath ? "border-red-500" : "border-gray-300"

@@ -6,6 +6,8 @@ const Signup = () => {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [mobile, setMobile] = useState("");
+  // const [whatsAppNumber, setWhatsAppNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -119,6 +121,38 @@ const Signup = () => {
                 <p className="text-red-500 text-xs mt-1">{errors.email}</p>
               )}
             </div>
+            <div className="mb-4">
+              <label className="block text-gray-700" htmlFor="email">
+                Mobile
+              </label>
+              <input
+                type="text"
+                id="mobile"
+                placeholder="Your mobile"
+                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+                value={mobile}
+                onChange={(e) => setMobile(e.target.value)}
+              />
+              {errors.mobile && (
+                <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>
+              )}
+            </div>
+            {/* <div className="mb-4">
+              <label className="block text-gray-700" htmlFor="email">
+                What's app Number
+              </label>
+              <input
+                type="text"
+                id="whatsAppNumber"
+                placeholder="Your What's app Number"
+                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+                value={whatsAppNumber}
+                onChange={(e) => setWhatsAppNumber(e.target.value)}
+              />
+              {errors.whatsAppNumber && (
+                <p className="text-red-500 text-xs mt-1">{errors.whatsAppNumber}</p>
+              )}
+            </div> */}
             <div className="mb-4">
               <label className="block text-gray-700" htmlFor="password">
                 Password
