@@ -1,9 +1,10 @@
 "use client";
-import { signOut } from "next-auth/react";
+
+import { doSingOut } from "@/app/actions";
+
 const Logout = () => {
   const handleSignOut = () => {
-    // signOut({callbackUrl: '/login'});
-    signOut({ callbackUrl: "http://localhost:3033/login" });
+    doSingOut();
   };
   return (
     <li>

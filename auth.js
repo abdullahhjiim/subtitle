@@ -7,6 +7,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { revalidatePath } from "next/cache";
+import { authConfig } from "./auth.config";
 
 export const {
     handlers: { GET, POST },
@@ -14,11 +15,8 @@ export const {
     signIn,
     signOut,
 } = NextAuth({
+    ...authConfig,
     adapter: MongoDBAdapter(mongoClientPromise, {databaseName: process.env.ENVIRONMENT }),
-    session: {
-        strategy : "jwt"
-    },
-
     providers: [
         CredentialsProvider({
             credentials: {
@@ -53,23 +51,42 @@ export const {
             }
         }),
         GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+            clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
+            authorization: {
+                params: {
+                    prompt: "consent",
+                    access_type: "offline",
+                    response_type: "code",
+                },
+            },
         }),
     ],
-    callbacks: {
 
-         jwt({ token, user }) {
-            if (user) { 
-              token.id = user.id
-              token.type = user.type
+    // callbacks: {
+    //     async jwt({ token, user, account }) {
+    //       console.log(`JWT token: ${JSON.stringify(token)}`);
+    //       console.log(`JWT Account: ${JSON.stringify(account)}`);
 
-            }
-            return token
-          },
+    //         if (account && user) {
+    //             return {
+    //                 accessToken: account?.access_token,
+    //                 accessTokenExpires: Date.now() + account?.expires_in * 1000,
+    //                 refreshToken: account?.refresh_token,
+    //                 user,
+    //             };
+    //         }
+    //     },
 
-          session (session, user) {
-          }
-        
-    }
+    //     async session({ session, token }) {
+
+    //       session.user = token?.user;
+    //       session.accessToken = token?.access_token;
+    //       session.error = token?.error
+
+    //       console.log(`Returning Session ${JSON.stringify(session)}`)
+    //       return session;
+    //     },
+    // },
+
 })

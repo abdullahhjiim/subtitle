@@ -1,317 +1,51 @@
 "use client";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import CardSingle from "../card/CardSingle";
-
-const cards = [
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 1",
-      subtitle: "Subtitle 1",
-      author: "Author 1",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 2",
-      subtitle: "Subtitle 2",
-      author: "Author 2",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 1",
-      subtitle: "Subtitle 1",
-      author: "Author 1",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 2",
-      subtitle: "Subtitle 2",
-      author: "Author 2",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 1",
-      subtitle: "Subtitle 1",
-      author: "Author 1",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 2",
-      subtitle: "Subtitle 2",
-      author: "Author 2",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 1",
-      subtitle: "Subtitle 1",
-      author: "Author 1",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 1",
-      subtitle: "Subtitle 1",
-      author: "Author 1",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 2",
-      subtitle: "Subtitle 2",
-      author: "Author 2",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 1",
-      subtitle: "Subtitle 1",
-      author: "Author 1",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 2",
-      subtitle: "Subtitle 2",
-      author: "Author 2",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 1",
-      subtitle: "Subtitle 1",
-      author: "Author 1",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 2",
-      subtitle: "Subtitle 2",
-      author: "Author 2",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 1",
-      subtitle: "Subtitle 1",
-      author: "Author 1",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 1",
-      subtitle: "Subtitle 1",
-      author: "Author 1",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 2",
-      subtitle: "Subtitle 2",
-      author: "Author 2",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 1",
-      subtitle: "Subtitle 1",
-      author: "Author 1",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 2",
-      subtitle: "Subtitle 2",
-      author: "Author 2",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 1",
-      subtitle: "Subtitle 1",
-      author: "Author 1",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 2",
-      subtitle: "Subtitle 2",
-      author: "Author 2",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 1",
-      subtitle: "Subtitle 1",
-      author: "Author 1",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 1",
-      subtitle: "Subtitle 1",
-      author: "Author 1",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 2",
-      subtitle: "Subtitle 2",
-      author: "Author 2",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 1",
-      subtitle: "Subtitle 1",
-      author: "Author 1",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 2",
-      subtitle: "Subtitle 2",
-      author: "Author 2",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 1",
-      subtitle: "Subtitle 1",
-      author: "Author 1",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 2",
-      subtitle: "Subtitle 2",
-      author: "Author 2",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-    {
-      photo: "https://via.placeholder.com/100",
-      title: "Card Title 1",
-      subtitle: "Subtitle 1",
-      author: "Author 1",
-      authorPhoto: "https://via.placeholder.com/50",
-      buttonLabel: "Download",
-      buttonLink: "#",
-    },
-  ];
-
 
 const InfiniteList = ({ type }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-  const [notificationLoading, setNotificationLoading] = useState(false);
-  const [allFilter, setAllFilter] = useState("active");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const limit = 10;
-  const getNotifications = (offsetData = 1, filter = true) => {
-    if (offsetData == 1) {
-      setLoading(true);
+  const getSubtitles = async (page, limit = 20) => {
+    const response = await fetch(
+      `/api/subtitle/infinity?page=${page}&limit=${limit}`,
+      {
+        method: "GET",
+      }
+    );
+    const result = await response.json();
+
+    console.log(result);
+    setData([...data, ...result?.subtitles]);
+    setCurrentPage(result?.currentPage);
+    if (result?.currentPage < result?.totalPages) {
+      setHasMore(true);
+    } else {
+      setHasMore(false);
     }
-
-    let url = `/notifications?limit=${limit}&page=${offsetData}`;
-    if (!filter) {
-      url = url + `&unread_only=true`;
-    }
-
-    authAxios
-      .get(url, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      })
-      .then((res) => {
-        let cloneData = offsetData > 1 ? [...data] : [];
-        setData([...cloneData, ...res?.data?.data]);
-        setLoading(false);
-
-        if (res?.data?.meta?.current_page == res?.data?.meta?.last_page) {
-          setHasMore(false);
-        } else {
-          setHasMore(true);
-        }
-      })
-      .catch(() => {
-        setLoading(false);
-      });
   };
 
   useEffect(() => {
-    // getNotifications(1);
+    getSubtitles(currentPage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchMoreData = () => {
+    console.log('come her');
     if (hasMore) {
-      let newOffset = offset + 1;
-      setOffset(newOffset);
-      getNotifications(newOffset, true);
+      let newPage = currentPage + 1;
+      setCurrentPage(newPage);
+      getSubtitles(newPage);
     }
   };
+
   return (
-    <div className="">
-      {/* <InfiniteScroll
+    <div className="w-full">
+      <InfiniteScroll
         dataLength={data.length}
         next={fetchMoreData}
         hasMore={hasMore}
@@ -320,28 +54,17 @@ const InfiniteList = ({ type }) => {
       >
         {data.length > 0 &&
           data.map((item, index) => {
+            let duration = .7;
+            let y = 100;
+
             return (
-              <li
-                key={index}
-                onClick={() => _handleNotification(url, item)}
-              ></li>
-            );
+              <motion.div initial={{y}} whileInView={{y: 0, transition : {duration }}} key={index}>
+                <CardSingle  data={item} />
+              </motion.div>
+            )
           })}
         {data?.length == 0 && <li>No Record Found</li>}
-      </InfiniteScroll> */}
-
-      {cards.map((card, index) => (
-        <CardSingle
-          key={index}
-          photo={card.photo}
-          title={card.title}
-          subtitle={card.subtitle}
-          author={card.author}
-          authorPhoto={card.authorPhoto}
-          buttonLabel={card.buttonLabel}
-          buttonLink={card.buttonLink}
-        />
-      ))}
+      </InfiniteScroll>
     </div>
   );
 };

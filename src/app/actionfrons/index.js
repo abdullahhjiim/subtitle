@@ -86,3 +86,15 @@ export async function getUsersByType(type) {
     return {status: 200, users}
     
 }
+
+
+export async function getSubtitleById (id) {
+  try {
+    await dbConnect();
+    const subtitle = await subtitleModel.findOne({_id : id}).lean();
+    return {status: 200, subtitle}
+  } catch (error ) {
+
+    return {status: 400, message : 'Something went wrong'}
+  }
+}

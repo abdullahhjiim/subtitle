@@ -10,9 +10,9 @@ const Contributor = async () => {
       </h2>
       <div className="">
         <div className="p-4 space-y-4">
-          {users && users.map((contributor) => (
+          {users && users.map((contributor, index) => (
             <TopContributor
-              key={contributor.id}
+              key={index}
               image={contributor.image}
               name={contributor.name}
               subs={contributor?.uploads}

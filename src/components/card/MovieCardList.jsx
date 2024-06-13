@@ -14,15 +14,12 @@ const MovieCardList = async ({ type }) => {
   return (
     <div className="relative bg-gray-100 p-8 rounded-lg shadow-lg">
       <MarQueComponent type={type} genres={genresList} />
-      <div className="p-4 bg-white rounded-lg shadow-md grid grid-cols-3 gap-4">
+      <div className="p-4 rounded-lg  grid grid-cols-3 gap-4">
         {subtitles &&
           subtitles.map((movie, index) => (
             <MovieCard
               key={index}
-              imageUrl={movie.thumbnail}
-              year={movie.year}
-              name={movie.title}
-              type={movie.genre}
+              movie={movie}
             />
           ))}
       </div>
