@@ -1,5 +1,4 @@
 import Footer from "@/components/common/Footer";
-import Navbar from "@/components/common/Navbar";
 import WrapCom from "@/components/wrapper/WrapCom";
 import { dbConnect } from "@/service/mongo";
 import { Rubik } from "next/font/google";
@@ -19,7 +18,6 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={rubik.className}>
         <WrapCom>
-          <Navbar />
             {children}
           <Footer />
         </WrapCom>

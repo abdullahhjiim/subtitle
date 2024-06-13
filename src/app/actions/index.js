@@ -1,12 +1,11 @@
 "use server"
 
-import { blogModel } from "@/models/blog-model";
 import { subtitleModel } from "@/models/subtitle-model";
 import { userModel } from "@/models/user-model";
 import { dbConnect } from "@/service/mongo";
 import { replaceMongoIdInArray } from "@/utils/data-util";
 import { revalidatePath } from "next/cache";
-import { auth, signIn } from "../../../auth";
+import { auth, signIn, signOut } from "../../../auth";
 
 
 export async function login(data) {
@@ -54,34 +53,10 @@ export async function postComment(data, blogId){
 }
 
 
-export async function getFavouriteBlogs() {
-
-    try {
-      const session = await auth();
-      if (!session) {
-        return new NextResponse("Unauthorized", { status: 401 });
-      }
-  
-      await dbConnect();
-  
-      const userData = await userModel.findOne({ "email": session?.user?.email });
-  
-      const blogs = await blogModel
-        .find({ _id: { $in: userData?.favouriteBlogs } })
-        .sort({ createdAt: 1 })
-        .limit(5);
-  
-      return blogs;
-    } catch (err) {
-        throw new Error(err);
-    }
-}
-
 export async function getProfileData (profileId) {
     try{
 
         const user = await userModel.findOne({"_id" : profileId});
-        const blogs = await blogModel.find({ 'author._id': user._id });
 
         return {user, blogs};
 
@@ -208,4 +183,13 @@ export async function getSubtitles(type, limit = 50) {
     } catch (error) {
         throw new Error(error);
     }
+}
+
+export async function doSignIn(type) {
+   
+    await signIn(type, {callbackUrl : "localhost:3033/dashboard"})
+}
+
+export async function doSingOut() {
+    await signOut({callbackUrl: "localhost:3033/login"})
 }

@@ -1,4 +1,5 @@
 import { getConfigurationByType } from "@/app/actionfrons";
+import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
 
 const CategoryList = async ({ title }) => {
@@ -14,12 +15,14 @@ const CategoryList = async ({ title }) => {
         </h2>
         <div className="flex flex-wrap justify-center">
           {genresList.map((category, index) => (
-            <span
+            <Link
+              href={`/search?genre=${category}`}
+              target="_blank"
               key={index}
-              className="inline-block bg-gray-600 text-white px-3 py-1 rounded-full text-sm font-semibold m-1"
+              className="inline-block cursor-pointer bg-gray-600 text-white px-3 py-1 rounded-full text-sm font-semibold m-1"
             >
               {category}
-            </span>
+            </Link>
           ))}
         </div>
       </div>

@@ -1,9 +1,11 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Search = ({ industriesList, genresList }) => {
 
+  const router = useRouter();
 
   const [searchTerm, setSearchTerm] = useState({
     year: "",
@@ -23,6 +25,7 @@ const Search = ({ industriesList, genresList }) => {
   const doSearch = () => {
     if(searchTerm.year || searchTerm.genres || searchTerm.industries) {
       console.log(searchTerm);
+      router.push(`/search?year=${searchTerm.year}&genre=${searchTerm.genres}&language=${searchTerm.industries}`);
     }
   }
 
