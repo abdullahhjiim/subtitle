@@ -18,7 +18,7 @@ const CardSingle = ({ data }) => {
       </div>
       <div className="flex flex-col justify-between flex-grow px-4 ">
         <div>
-          <h2 className="text-xl font-bold text-gray-800 -mt-4">
+          <h2 className="text-xl font-bold text-gray-800 -mt-4 truncate">
             {data?.title} Bangla Subtitle
           </h2>
           <div className="flex gap-3 text-sm mt-2">

@@ -98,3 +98,22 @@ export async function getSubtitleById (id) {
     return {status: 400, message : 'Something went wrong'}
   }
 }
+
+export async function getRelatedSutitle(id, data) {
+  try {
+    await dbConnect();
+    let subtitles = await subtitleModel.find({
+       _id: { $ne: id }, 
+       $or: [
+        { year: data?.year },
+        { genre: { $regex: data?.genre, $options: "i" } },
+      ],
+      }).sort({createdAt : -1})
+      .lean();
+      subtitles =  replaceMongoIdInArray(subtitles);
+    return {status: 200, subtitles}
+  } catch (error ) {
+
+    return {status: 400, message : 'Something went wrong'}
+  }
+}

@@ -1,18 +1,20 @@
 "use client";
 import { doSignIn, login } from "@/app/actions";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { FaFacebookF } from "react-icons/fa6";
+import { FaFacebookF, FaSpinner } from "react-icons/fa6";
+import { MdLogin } from "react-icons/md";
 
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [error, setError] = useState("");
   const router = useRouter();
-
+  const searchParams = useSearchParams();
 
   const validate = () => {
     const errors = {};
@@ -30,15 +32,22 @@ const Login = () => {
   };
 
   async function onHanldeSubmit(data) {
+    setLoading(true);
     try {
       const response = await login(data);
       if (!!response.error) {
         setError(response.error);
       } else {
-        router.push("/dashboard");
+        if (searchParams.get("back")) {
+          router.back();
+        } else {
+          router.push("/dashboard");
+        }
       }
     } catch (err) {
       setError(err.message);
+    }finally{
+      setLoading(false);
     }
   }
 
@@ -105,16 +114,16 @@ const Login = () => {
             <div className="mt-6">
               <button
                 onClick={handleSubmit}
-                className="w-full px-4 py-2 tracking-wide text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
+                disabled={loading}
+                className="w-full flex gap-4 items-center justify-center disabled:bg-opacity-60 bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-4 py-2 rounded hover:bg-gradient-to-l duration-500"
               >
-                Login
+               <MdLogin /> {loading && <FaSpinner />}  Login
               </button>
             </div>
           </div>
 
           <div className="flex items-center justify-center bg-gray-100 mt-4">
             <div className="w-full  bg-white rounded ">
-              
               <div className="flex justify-between items-center gap-2">
                 <button
                   onClick={() => handleSocialSignIn("google")}
@@ -158,7 +167,7 @@ const Login = () => {
                   onClick={() => handleSocialSignIn("facebook")}
                   className="flex items-center justify-center w-full px-2 py-2 gap-2  text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 duration-500"
                 >
-                  <FaFacebookF size={'16px'} />
+                  <FaFacebookF size={"16px"} />
                   <span>Sign in with Facebook</span>
                 </button>
               </div>

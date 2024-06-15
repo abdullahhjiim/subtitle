@@ -48,7 +48,7 @@ const SearchAndMenu = () => {
           Services
         </a>
         {session?.user?.email ? (
-          <UserMenu />
+          <UserMenu session={session} />
         ) : (
           <Link
             href="/login"

@@ -59,7 +59,7 @@ export default function Configurations() {
         </thead>
         <tbody>
           {configs && configs.map((config) => (
-            <tr key={config._id}>
+            <tr key={config.id}>
               <td className="border p-2">{config.type}</td>
               <td className="border p-2">{config.value}</td>
               <td className="border p-2 ">

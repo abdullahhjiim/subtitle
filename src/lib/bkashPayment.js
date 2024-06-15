@@ -1,3 +1,4 @@
+import { counterModel } from "@/models/counter-model";
 import axios from "axios";
 
 export const grantToken = async () => {
@@ -31,4 +32,14 @@ export const makeHeaders = (bkashGrantToken) => {
     authorization: bkashGrantToken,
     "x-app-key": process.env.BKASH_API_KEY,
   }
+}
+
+export const getNextInvoiceNumber = async ()  => {
+  const counter = await counterModel.findByIdAndUpdate(
+    { _id: 'invoiceNumber' },
+    { $inc: { seq: 1 } },
+    { new: true, upsert: true }
+  );
+
+  return counter.seq;
 }

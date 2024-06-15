@@ -1,4 +1,5 @@
 "use client";
+import { getRatingSubtitle, ratingSubmit } from "@/app/actions";
 import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { ImSpinner9 } from "react-icons/im";
@@ -12,14 +13,23 @@ const RatingFeedback = ({ subtitle }) => {
   const [comments, setComments] = useState([]);
 
   const getComments = async () => {
-    const response = await fetch(`/api/comment?subtitleId=${subtitle._id}`, {method: "GET"});
+    const response = await fetch(`/api/comment?subtitleId=${subtitle._id}`, {
+      method: "GET",
+    });
     const result = await response.json();
     setComments(result?.comments);
+  };
+
+  const getRating = async () => {
+    const rating = await getRatingSubtitle(subtitle?._id);
+    setRating(rating);
   }
 
   useEffect(() => {
     getComments();
-  }, [])
+    getRating();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,13 +46,12 @@ const RatingFeedback = ({ subtitle }) => {
         });
         const result = await response.json();
 
-        if(result?.success) {
-            // toast message 
-            setFeedback("");
-            console.log(result);
-            getComments();
+        if (result?.success) {
+          // toast message
+          setFeedback("");
+          console.log(result);
+          getComments();
         }
-
       } catch (error) {
         console.log(error);
       } finally {
@@ -51,6 +60,23 @@ const RatingFeedback = ({ subtitle }) => {
     }
   };
 
+  const handleRating = async (value) => {
+    let previousRating = rating;
+    setRating(value);
+    try {
+      const response = await ratingSubmit(subtitle?._id, value);
+      console.log(response);
+      if(response?.success ) {
+        setRating(value);
+      }else {
+        setRating(previousRating);
+      }
+    } catch (error) {
+      console.log(error);
+      console.log(error?.message);
+      setRating(previousRating)
+    }
+  };
 
   return (
     <div className="w-[500px] pl-8">
@@ -65,13 +91,13 @@ const RatingFeedback = ({ subtitle }) => {
                 type="radio"
                 name="rating"
                 value={ratingValue}
-                onClick={() => setRating(ratingValue)}
+                onClick={() => handleRating(ratingValue)}
                 className="hidden"
               />
               <FaStar
                 className={`cursor-pointer text-3xl ${
                   ratingValue <= (hover || rating)
-                    ? "text-yellow-500"
+                    ? "text-purple-500"
                     : "text-gray-300"
                 }`}
                 onMouseEnter={() => setHover(ratingValue)}
@@ -99,7 +125,9 @@ const RatingFeedback = ({ subtitle }) => {
           </button>
         </div>
       </form>
-      <h3 className="text-lg font-semibold mt-6 mb-4">Comments ({comments?.length})</h3>
+      <h3 className="text-lg font-semibold mt-6 mb-4">
+        Comments ({comments?.length})
+      </h3>
       <ul className="space-y-4">
         {comments.map((comment) => (
           <li

@@ -63,6 +63,23 @@ export const {
         }),
     ],
 
+    // callbacks : {
+    //     async jwt({token, user, account}) {
+    //         console.log(" token user account ",token, user, account);
+    //         if(account && user) {
+    //             return {
+    //                 user
+    //             }
+    //         }
+    //     },
+        
+    //     async session({session, token}) {
+    //         console.log("my session in session ", session, token);
+    //         session.user = token.user;
+    //         return session;
+    //     }
+    // }
+
     // callbacks: {
     //     async jwt({ token, user, account }) {
     //       console.log(`JWT token: ${JSON.stringify(token)}`);

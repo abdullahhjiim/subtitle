@@ -10,10 +10,10 @@ const page = async ({ params }) => {
   const response = await getSubtitleById(subtitleId);
 
   return (
-    <div className="container mx-auto h-screen p-10 mt-4 flex justify-center">
+    <div className="container mx-auto h-auto p-10 mt-4 flex justify-center">
       <div className="">
         <CardDetail subtitle={response?.subtitle} />
-        <RelatedSubtitle  />
+        <RelatedSubtitle subtitleId={subtitleId} subtitle={response?.subtitle} />
       </div>
       <RatingFeedback subtitle={response?.subtitle} />
     </div>

@@ -1,19 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
 
+import Image from "next/image";
 import Link from "next/link";
 import Logout from "./Logout";
 
-const UserMenu = () => {
+const UserMenu = ({session}) => {
   return (
     <div className="">
       <div className="relative inline-block group">
         <div className="flex items-center cursor-pointer ">
           {/* User Avatar */}
-          <img
+
+          {session?.user?.image ? <>
+            <Image src={session?.user?.image} alt="user image" width={40} height={40} className="rounded-full" />
+          </> : <img
             src="https://cdn.vectorstock.com/i/1000v/51/87/student-avatar-user-profile-icon-vector-47025187.jpg"
             alt="User Avatar"
             className="w-10 h-10 rounded-full"
-          />
+          />}
+          
           {/* User Name */}
           {/* <span className="ml-2 text-gray-800">John Doe</span> */}
         </div>

@@ -1,8 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import { auth } from "../../../auth";
 import UserMenu from "../header/UserMenu";
 
+
 const Navbar = async () => {
+  const session = await auth();
   return (
     <nav className="bg-white shadow-md py-4 px-6 sticky top-0 z-50">
       <div className="container mx-auto grid grid-cols-2 items-center">
@@ -32,7 +35,7 @@ const Navbar = async () => {
           >
             Services
           </a>
-          <UserMenu />
+          <UserMenu session={session}/>
         </div>
 
         {/* Responsive Menu Button */}
@@ -52,6 +55,8 @@ const Navbar = async () => {
                 d="M4 6h16M4 12h16M4 18h16"
               ></path>
             </svg>
+
+            
           </button>
         </div>
       </div>

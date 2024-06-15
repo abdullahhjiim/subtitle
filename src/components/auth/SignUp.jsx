@@ -1,9 +1,12 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { FaSpinner } from "react-icons/fa6";
+import { TiUserAdd } from "react-icons/ti";
 
 const Signup = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
@@ -36,9 +39,9 @@ const Signup = () => {
     return errors;
   };
 
-  async function onHandleSubmit (data) {
+  async function onHandleSubmit(data) {
+    setLoading(true);
     try {
-
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: {
@@ -46,18 +49,18 @@ const Signup = () => {
         },
         body: data,
       });
-      
-      res.status === 201 &&
+
+      if (res.status === 201) {
         router.push("/login");
-
-      if(res.status == 400) {
-        setError('Email already exits');
-      }else {
-        setError('Something went wrong , please call to system admin..');
+      } else if (res.status == 400) {
+        setError("Email already exits");
+      } else {
+        setError("Something went wrong , please call to system admin..");
       }
-
     } catch (error) {
       setError(error.message);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -66,14 +69,15 @@ const Signup = () => {
     const validationErrors = validate();
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
-      onHandleSubmit(JSON.stringify({
-        name,
-        email,
-        password,
-      }))
+      onHandleSubmit(
+        JSON.stringify({
+          name,
+          email,
+          password,
+        })
+      );
     }
   };
-
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -83,11 +87,12 @@ const Signup = () => {
           style={{ backgroundImage: `url('/signup.png')` }}
         ></div>
         <div className="w-full p-8 lg:w-1/2">
-        
           <h2 className="text-2xl font-bold text-gray-700 text-center">
             Sign Up
           </h2>
-          <div className="text-xl text-red-500 text-center">{error && error}</div>
+          <div className="text-xl text-red-500 text-center mt-2">
+            {error && error}
+          </div>
           <form className="mt-4" onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block text-gray-700" htmlFor="name">
@@ -123,7 +128,7 @@ const Signup = () => {
             </div>
             <div className="mb-4">
               <label className="block text-gray-700" htmlFor="email">
-                Mobile
+                What&apos;s App Number
               </label>
               <input
                 type="text"
@@ -188,8 +193,11 @@ const Signup = () => {
               )}
             </div>
             <div className="mt-6">
-              <button className="w-full px-4 py-2 tracking-wide text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                Sign Up
+              <button
+                disabled={loading}
+                className="w-full flex gap-4 items-center justify-center disabled:bg-opacity-60 bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-4 py-2 rounded hover:bg-gradient-to-l duration-500"
+              >
+                <TiUserAdd /> {loading && <FaSpinner />} Sign Up
               </button>
             </div>
           </form>

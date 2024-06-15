@@ -1,9 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
+import { auth } from "../../../auth";
 import DownloadCom from "./DownloadCom";
 
-const CardDetail = ({ subtitle }) => {
+
+const CardDetail = async ({ subtitle }) => {
+  const session = await auth();
   return (
-    <div className="flex w-[700px] h-[500px] border border-gray-300 rounded-lg shadow overflow-hidden">
+    <div className="flex w-full h-[500px] border border-gray-300 rounded-lg shadow overflow-hidden">
       <div className="w-3/5 h-full">
         <img
           src={subtitle?.thumbnail}
@@ -41,7 +44,7 @@ const CardDetail = ({ subtitle }) => {
             <div className="capitalize">: &nbsp; &nbsp;{subtitle?.releaseInfo}</div>
           </div>
         </div>
-        <DownloadCom filePath={subtitle?.filePath} />
+        <DownloadCom filePath={subtitle?.filePath} session={session} subtitleId={subtitle?._id} />
       </div>
     </div>
   );

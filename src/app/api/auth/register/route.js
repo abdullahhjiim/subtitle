@@ -4,8 +4,7 @@ import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 
 export const POST = async (request) => {
-  const { name, email, password } = await request.json();
-
+  const { name, email, password, mobile } = await request.json();
 
   await dbConnect();
 
@@ -14,9 +13,9 @@ export const POST = async (request) => {
   const newUser = {
     name,
     email,
+    mobile,
     password: hashedPassword,
   };
-
 
   try {
     await userModel.create(newUser);
@@ -24,25 +23,18 @@ export const POST = async (request) => {
       status: 201,
     });
   } catch (err) {
-    
-
-    
     if (err.code === 11000) {
       // return res.status(400).json({ message: 'Email already exists' });
       // return new NextResponse('Email already exists', {
       //   status: 500,
       // });
-
       return new NextResponse(err.message, {
         status: 400,
       });
-    }else {
+    } else {
       return new NextResponse(err.message, {
         status: 500,
       });
     }
-
-    
-
   }
 };
