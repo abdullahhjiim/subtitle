@@ -14,7 +14,6 @@ const MySubtitle = async () => {
     await statusToggle(data, 'my-subtitle');
   };
 
-  console.log(subtitles);
 
   return (
     <div className="">

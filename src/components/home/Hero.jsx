@@ -12,7 +12,7 @@ const Hero = async () => {
   const languageList = ["English", "Hindi", "Tamil", "Spanis"];
 
   return (
-    <section className="bg-[#F6F3E9] max-h-[80vh] relative grid place-items-center  bg-cover bg-no-repeat bg-center">
+    <section className="bg-[#F6F3E9] xl:max-h-[80vh] relative grid place-items-center  bg-cover bg-no-repeat bg-center">
       <div className="container items-center p-12 ">
         <div className="col-span-7">
           <HeroHeader />

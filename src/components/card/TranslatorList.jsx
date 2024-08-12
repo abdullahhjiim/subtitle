@@ -9,7 +9,7 @@ const TranslatorList = async () => {
 
   return (
     <div className="">
-      <div className="p-4 grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-3">
+      <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
         {users.map((user, index) => (
           <PersonCard
             key={index}

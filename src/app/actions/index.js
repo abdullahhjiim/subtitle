@@ -7,7 +7,7 @@ import { userModel } from "@/models/user-model";
 import { dbConnect } from "@/service/mongo";
 import { replaceMongoIdInArray } from "@/utils/data-util";
 import { revalidatePath } from "next/cache";
-import { auth, signIn, signOut } from "../../../auth";
+import { auth, signIn, signOut } from "../../auth";
 
 export async function login(data) {
   try {
@@ -98,12 +98,12 @@ export async function uploadFile(
 }
 
 export async function getAllUser(type = 1) {
-  try {
-    const session = await auth();
-    if (!session) {
-      return { status: 401, message: "Unauthrized" };
-    }
+  const session = await auth();
+  if (!session) {
+    return { status: 401, message: "Unauthrized" };
+  }
 
+  try {
     let users = null;
     if (type == 1) {
       users = await userModel.find({ type }).lean();
@@ -157,12 +157,12 @@ export async function statusToggle(data, type = "users") {
 }
 
 export async function getSubtitles(type, limit = 50) {
-  try {
-    const session = await auth();
-    if (!session) {
-      return { status: 401, message: "Unauthrized" };
-    }
+  const session = await auth();
+  if (!session) {
+    return { status: 401, message: "Unauthrized" };
+  }
 
+  try {
     let subtitles = [];
     if (type == "my-subtile") {
       subtitles = await subtitleModel
@@ -182,11 +182,13 @@ export async function getSubtitles(type, limit = 50) {
 }
 
 export async function doSignIn(type) {
-  await signIn(type, { callbackUrl: "localhost:3033/dashboard" });
+  await signIn(type, {
+    callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`,
+  });
 }
 
 export async function doSingOut() {
-  await signOut({ callbackUrl: "localhost:3033/login" });
+  await signOut({ callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/login` });
 }
 
 export async function ratingSubmit(subtitleId, rating) {

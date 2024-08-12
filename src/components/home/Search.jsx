@@ -39,8 +39,10 @@ const Search = ({ industriesList, genresList }) => {
       <div className="lg:max-h-[250px] mt-6">
         <div id="searchParams" className={"!shadow-none"}>
           <div>
-            <span>Language</span>
-            <h4 className="mt-2">
+            <div className="md:text-xl text-base font-extrabold">
+            <span >Language</span>
+            </div>
+            <h4 className="mt-2 md:text-sm text-xs">
               <select
                 name="industries"
                 id="industries"
@@ -57,8 +59,10 @@ const Search = ({ industriesList, genresList }) => {
             </h4>
           </div>
           <div>
-            <span>Genres</span>
-            <h4 className="mt-2">
+          <div className="md:text-xl text-base font-extrabold">
+            <span >Genres</span>
+            </div>
+            <h4 className="mt-2 md:text-sm text-xs">
               <select
                 name="genres"
                 id="genres"
@@ -75,8 +79,11 @@ const Search = ({ industriesList, genresList }) => {
             </h4>
           </div>
           <div>
-            <span>Year</span>
-            <h4 className="mt-2">
+          <div className="md:text-xl text-base font-extrabold">
+            <span >Year</span>
+            </div>
+
+            <h4 className="mt-2 md:text-sm text-xs">
               <select
                 name="year"
                 id="year"
@@ -95,7 +102,7 @@ const Search = ({ industriesList, genresList }) => {
         </div>
       </div>
 
-      <button className="search-btn" onClick={doSearch}>
+      <button className="search-btn md:text-base text-sm" onClick={doSearch}>
         🔍️ &nbsp; { " Search"}
       </button>
     </>

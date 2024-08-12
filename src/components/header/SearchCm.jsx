@@ -38,7 +38,7 @@ const SearchCm = () => {
 
   return (
     <>
-      <div className="w-[400px]">
+      <div className="lg:w-[400px] w-[200px]">
         <ReactTyped
           strings={[
             "Search here ... Bangla Subtitle",
@@ -57,7 +57,7 @@ const SearchCm = () => {
             placeholder="Search here ... "
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="py-2 pl-10 pr-4  block w-full rounded-lg border border-gray-300 focus:outline-none focus:border-gray-500"
+            className="py-2 pl-10 pr-4  block md:w-[78%] w-full rounded-lg border border-gray-300 focus:outline-none focus:border-gray-500"
           />
         </ReactTyped>
       </div>

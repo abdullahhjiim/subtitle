@@ -1,3 +1,4 @@
+"use server";
 import { configurationModel } from "@/models/configuration-model";
 import { subtitleModel } from "@/models/subtitle-model";
 import { userModel } from "@/models/user-model";
@@ -115,5 +116,16 @@ export async function getRelatedSutitle(id, data) {
   } catch (error ) {
 
     return {status: 400, message : 'Something went wrong'}
+  }
+}
+
+export async function getUserById(id) {
+  try {
+    await dbConnect();
+
+    return await userModel.findOne({_id : id}).lean();
+    
+  } catch(error) {
+    throw new Error(error.message);
   }
 }

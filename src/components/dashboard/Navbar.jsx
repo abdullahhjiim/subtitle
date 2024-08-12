@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { auth } from "../../../auth";
+import { auth } from "../../auth";
 import UserMenu from "../header/UserMenu";
 
 
