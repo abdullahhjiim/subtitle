@@ -1,6 +1,6 @@
 import Signup from "@/components/auth/SignUp";
 import { redirect } from "next/navigation";
-import { auth } from "../../../../auth";
+import { auth } from "../../../auth";
 
 const SingupPage = async () => {
   const session = await auth();

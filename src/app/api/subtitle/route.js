@@ -8,7 +8,7 @@ import {
 } from "@/utils/fileUpload";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
-import { auth } from "../../../../auth";
+import { auth } from "../../../auth";
 
 export const POST = async (request) => {
   const session = await auth();
@@ -86,6 +86,7 @@ export const POST = async (request) => {
     await user.save();
 
     revalidatePath("/dashboard/my-subtitle");
+    revalidatePath("/");
 
     return new NextResponse("Subtitle has been created", {
       status: 201,

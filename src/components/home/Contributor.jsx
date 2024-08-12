@@ -16,7 +16,7 @@ const Contributor = async () => {
               image={contributor.image}
               name={contributor.name}
               subs={contributor?.uploads}
-              followers={contributor?.followers}
+              id={contributor?._id}
             />
           ))}
         </div>

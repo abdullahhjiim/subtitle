@@ -11,8 +11,9 @@ const SearchAndMenu = () => {
 
   return (
     <>
-      <div className="hidden md:flex w-1/2 mx-4 justify-center">
-        <div className="relative w-full">
+      <div className="md:block hidden">
+      <div className="md:flex w-1/2 mx-4 justify-center">
+        <div className="relative w-[380%]  lg:w-full">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -32,18 +33,22 @@ const SearchAndMenu = () => {
           <SearchCm />
         </div>
       </div>
+      </div>
+
 
       {/* Links */}
-      <div className="hidden md:flex space-x-6 justify-end items-center">
+
+   
+      <div className="sm:flex md:space-x-3 space-x-0 justify-end items-center">
         <Link
           href="/contact"
-          className="text-gray-800 hover:text-gray-700 font-semibold hover:font-bold hover:text-pink-500 duration-500"
+          className="text-gray-800 mr-[10px] font-semibold hover:font-bold hover:text-pink-500 duration-500"
         >
           Contact
         </Link>
         <a
           href="#"
-          className="text-gray-800 hover:text-gray-700 font-semibold hover:font-bold hover:text-pink-500 duration-500"
+          className="text-gray-800 font-semibold hover:font-bold hover:text-pink-500 duration-500"
         >
           Services
         </a>
@@ -58,8 +63,35 @@ const SearchAndMenu = () => {
           </Link>
         )}
       </div>
+
+ 
+      <div className="md:hidden mt-3 ml-[20%]">
+      <div className="md:flex w-1/2 justify-center">
+        <div className="relative w-[380%]  lg:w-full">
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+              />
+            </svg>
+          </div>
+          <SearchCm />
+        </div>
+      </div>
+      </div>
     </>
   );
 };
 
 export default SearchAndMenu;
+
+

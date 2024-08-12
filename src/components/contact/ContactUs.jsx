@@ -1,20 +1,55 @@
+"use client"
+
+import Swal from "sweetalert2";
+
 const ContactUs = () => {
+  const handleMessage = event =>{
+    event.preventDefault();
+    const form = event.target;
+
+    const name= form.name.value;
+    const email= form.email.value;
+    const message= form.message.value;
+    const newMessage= {name,email,message}
+console.log(newMessage);
+//send data to server
+fetch('http://localhost:3033/message',{
+  method: 'POST',
+  headers:{
+    'content-type': 'application/json'
+  },
+  body: JSON.stringify(newMessage)
+})
+.then(res => res.json())
+.then(data =>{
+  console.log(data);
+  if (data.insertedId) {
+    Swal.fire({
+      title: "success",
+      text: "message sent successfully",
+      icon: "success",
+      confirmButtonText: "Cool",
+    });
+  }
+})
+  }
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center">
       <div className="w-full bg-blue-500 py-8">
         <h1 className="text-3xl text-white text-center">Contact Us</h1>
       </div>
-      <div className="container mx-auto p-8 flex justify-between gap-3">
+      <div className="container mx-auto  p-8 flex justify-between flex-col lg:flex-row  gap-3">
         {/* Contact Form */}
         <div className="w-full lg:w-2/3 bg-white p-8 shadow-lg rounded-lg">
           <h2 className="text-2xl mb-6">Get in Touch</h2>
-          <form className="space-y-6">
+          <form onSubmit={handleMessage} className="space-y-6">
             <div>
               <label className="block text-gray-700">Name</label>
               <input
                 type="text"
                 className="w-full p-2 border border-gray-300 rounded mt-1"
                 placeholder="Your Name"
+                name="name"
               />
             </div>
             <div>
@@ -23,6 +58,7 @@ const ContactUs = () => {
                 type="email"
                 className="w-full p-2 border border-gray-300 rounded mt-1"
                 placeholder="Your Email"
+                name="email"
               />
             </div>
             <div>
@@ -31,6 +67,7 @@ const ContactUs = () => {
                 className="w-full p-2 border border-gray-300 rounded mt-1"
                 rows="4"
                 placeholder="Your Message"
+                name="message"
               ></textarea>
             </div>
             <div>

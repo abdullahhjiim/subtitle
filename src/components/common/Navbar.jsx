@@ -7,7 +7,8 @@ const Navbar = () => {
   return (
     <SessionProvider>
       <nav className="bg-white shadow-md py-4 px-6 sticky top-0 z-50">
-        <div className="container mx-auto grid grid-cols-3 items-center">
+
+        <div className="container mx-auto grid md:grid-cols-3 grid-cols-2 items-center">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="text-xl font-bold text-gray-800">
@@ -22,6 +23,9 @@ const Navbar = () => {
 
           <SearchAndMenu />
         </div>
+
+       
+
 
         {/* Mobile Menu */}
         {/* <div className="md:hidden mt-4">

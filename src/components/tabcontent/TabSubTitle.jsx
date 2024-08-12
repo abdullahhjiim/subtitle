@@ -39,13 +39,14 @@ const TabSubTitle = () => {
           <Tab
             key={label}
             value={label}
-            activeClassName="bg-gray-500 rounded-md text-red-800"
+            activeClassName="bg-gray-500 h rounded-md text-red-800"
             className="text-2xl font-semibold"
           >
             {label}
           </Tab>
         ))}
       </TabsHeader>
+      
       <TabsBody
         animate={{
           initial: { y: 250 },

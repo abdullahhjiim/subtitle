@@ -1,3 +1,4 @@
+import { getUserById } from "@/app/actionfrons";
 import UserDetailsCard from "@/components/card/UserDetailsCard";
 import Banner from "@/components/common/Banner";
 import Description from "@/components/common/Description";
@@ -10,13 +11,16 @@ const user = {
     followers: 1200,
   };
 
-const AllMovies = () => {
+const Contributor = async ({params}) => {
+
+  const contributor = await getUserById(params.id);
+
   return (
     <div className="">
       <div className="mx-auto">
         <Banner
           imageUrl="https://via.placeholder.com/800x200"
-          title={"All Subtitle"}
+          title={"Contributor"}
           description={"Some content of all description"}
         />
         <div className="container mx-auto">
@@ -27,7 +31,7 @@ const AllMovies = () => {
                 description="This platform is designed for everyone in Pakundia Upazila. Our goal is to help each other by providing useful information and services."
               />
               <div className="mt-8 flex flex-col gap-6 shadow-lg rounded-md p-4">
-              <UserDetailsCard user={user} />
+              <UserDetailsCard user={contributor} />
               </div>
             </div>
             <div className="w-1/4">
@@ -40,4 +44,4 @@ const AllMovies = () => {
   );
 };
 
-export default AllMovies;
+export default Contributor;

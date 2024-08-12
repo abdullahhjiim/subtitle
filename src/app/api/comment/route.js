@@ -2,7 +2,7 @@ import { commentModel } from "@/models/comment-model";
 import { userModel } from "@/models/user-model";
 import { dbConnect } from "@/service/mongo";
 import { NextResponse } from "next/server";
-import { auth } from "../../../../auth";
+import { auth } from "../../../auth";
 
 export async function GET(request) {
     const searchParams = await request.nextUrl.searchParams;

@@ -79,7 +79,7 @@ const RatingFeedback = ({ subtitle }) => {
   };
 
   return (
-    <div className="w-[500px] pl-8">
+    <div className="md:w-[500px] w-full pl-8">
       <h2 className="text-xl font-semibold mb-4">Rate and Give Feedback</h2>
 
       <div className="flex items-center mb-4">

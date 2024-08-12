@@ -18,7 +18,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="min-w-[270px] rounded-md w-64 bg-gradient-to-r from-purple-500 to-indigo-600 text-white">
+    <div className="md:min-w-[270px] rounded-md w-64 bg-gradient-to-r from-purple-500 to-indigo-600 text-white">
       <div className="p-6 text-2xl font-bold">My Dashboard</div>
       <ul className="space-y-2">
         <Link href={'/dashboard'}><li className="px-4 py-2 hover:bg-indigo-700 flex items-center">
